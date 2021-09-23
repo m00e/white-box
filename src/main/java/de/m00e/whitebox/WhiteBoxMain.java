@@ -2,13 +2,13 @@ package de.m00e.whitebox;
 
 import de.m00e.whitebox.components.ImagePane;
 import de.m00e.whitebox.components.LabeledTextField;
+import de.m00e.whitebox.listeners.OpenURLButtonListener;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.*;
-import javafx.scene.image.Image;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -16,8 +16,10 @@ import java.awt.*;
 
 public class WhiteBoxMain extends Application {
 
-    private final int WIDTH = 250;
-    private final int MIN_HEIGHT = 500, MAX_HEIGHT = 1080;
+    private Stage stage;
+
+    private final double WIDTH = 300;
+    private final double MIN_HEIGHT = 500, MAX_HEIGHT = 1080;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     // Components
@@ -31,18 +33,15 @@ public class WhiteBoxMain extends Application {
 
     @Override
     public void start(Stage stage) {
+        this.stage = stage;
         stage.setTitle("White Box");
-        stage.setMinWidth(WIDTH);
-        stage.setMaxWidth(WIDTH);
-        stage.setMinHeight(screenSize.getHeight()-200);
-        stage.setMaxHeight(MAX_HEIGHT);
-        stage.setX(screenSize.width-WIDTH);
-        stage.setY(0);
+        setStageBoundsAndLocation(WIDTH, WIDTH, screenSize.getHeight()-200, MAX_HEIGHT, screenSize.width-WIDTH, 0);
 
         setupComponents();
+        addListeners();
 
         VBox root = new VBox();
-        root.getChildren().addAll(imgPane, btn1, btn2, btn3, ltfLogin, ltfPass);
+        root.getChildren().addAll(imgPane, btn1, btn2, btn3, ltfLogin, ltfPass, new Separator());
         root.setSpacing(10);
         root.setPadding(new Insets(10));
         ScrollPane sp = new ScrollPane();
@@ -59,19 +58,33 @@ public class WhiteBoxMain extends Application {
         btn2 = new Button("TU ISIS");
         btn3 = new Button("TU Moses");
 
-        btn1.setMinWidth(WIDTH-20);
-        btn2.setMinWidth(WIDTH-20);
-        btn3.setMinWidth(WIDTH-20);
-
+        btn1.setMinWidth(WIDTH);
+        btn2.setMinWidth(WIDTH);
+        btn3.setMinWidth(WIDTH);
         btn1.setMinHeight(50);
         btn2.setMinHeight(50);
         btn3.setMinHeight(50);
 
-        ltfLogin = new LabeledTextField("Name\t", false);
-        ltfPass = new LabeledTextField("Password\t", true);
+        ltfLogin = new LabeledTextField("Login: ", LabeledTextField.Mode.TEXTFIELD);
+        ltfPass = new LabeledTextField("Password: ", LabeledTextField.Mode.PASSWORD_FIELD);
 
-        imgPane = new ImagePane("file:src/main/resources/images/icon.png");
+        imgPane = new ImagePane("/icon_300x150.png");
         imgPane.setMaxWidth(WIDTH);
         imgPane.setMaxHeight(125);
+    }
+
+    public void addListeners() {
+        btn1.setOnAction(new OpenURLButtonListener("http://www.tu.berlin", ltfLogin.getAccessibleText(), ltfPass.getAccessibleText()));
+        btn2.setOnAction(new OpenURLButtonListener("http://www.isis.tu-berlin.de", ltfLogin.getAccessibleText(), ltfPass.getAccessibleText()));
+        btn3.setOnAction(new OpenURLButtonListener("http://www.moseskonto.tu-berlin.de", ltfLogin.getAccessibleText(), ltfPass.getAccessibleText()));
+    }
+
+    private void setStageBoundsAndLocation(double minWidth, double maxWidth, double minHeight, double maxHeight, double x, double y) {
+        stage.setMinWidth(minWidth);
+        stage.setMaxWidth(minWidth);
+        stage.setMinHeight(minHeight);
+        stage.setMaxHeight(maxHeight);
+        stage.setX(x);
+        stage.setY(y);
     }
 }
