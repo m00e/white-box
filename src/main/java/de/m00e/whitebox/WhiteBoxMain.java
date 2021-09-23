@@ -1,12 +1,13 @@
 package de.m00e.whitebox;
 
 import de.m00e.whitebox.components.ImagePane;
-import de.m00e.whitebox.components.LabeledTextField;
-import de.m00e.whitebox.listeners.OpenURLButtonListener;
+import de.m00e.whitebox.components.LinkBox;
+import de.m00e.whitebox.components.TaskBox;
 import javafx.application.Application;
+import javafx.geometry.Dimension2D;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
@@ -18,13 +19,12 @@ public class WhiteBoxMain extends Application {
 
     private Stage stage;
 
-    private final double WIDTH = 300;
-    private final double MIN_HEIGHT = 500, MAX_HEIGHT = 1080;
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static final double WIDTH = 320;
+    private static final double NODE_HEIGHT = 50;
+    private static final double BUTTON_WIDTH = WIDTH-20;
+    private static final double BUTTON_HEIGHT = NODE_HEIGHT;
+    private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    // Components
-    private Button btn1, btn2, btn3;
-    private LabeledTextField ltfLogin, ltfPass;
     private ImagePane imgPane;
 
     public static void main(String[] args) {
@@ -35,48 +35,26 @@ public class WhiteBoxMain extends Application {
     public void start(Stage stage) {
         this.stage = stage;
         stage.setTitle("White Box");
-        setStageBoundsAndLocation(WIDTH, WIDTH, screenSize.getHeight()-200, MAX_HEIGHT, screenSize.width-WIDTH, 0);
-
-        setupComponents();
-        addListeners();
-
-        VBox root = new VBox();
-        root.getChildren().addAll(imgPane, btn1, btn2, btn3, ltfLogin, ltfPass, new Separator());
-        root.setSpacing(10);
-        root.setPadding(new Insets(10));
-        ScrollPane sp = new ScrollPane();
-        sp.setContent(root);
-        sp.setPannable(true); // it means that the user should be able to pan the viewport by using the mouse.
-        Scene scene = new Scene(sp, WIDTH, MIN_HEIGHT);
-
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    private void setupComponents() {
-        btn1 = new Button("TU Homepage");
-        btn2 = new Button("TU ISIS");
-        btn3 = new Button("TU Moses");
-
-        btn1.setMinWidth(WIDTH);
-        btn2.setMinWidth(WIDTH);
-        btn3.setMinWidth(WIDTH);
-        btn1.setMinHeight(50);
-        btn2.setMinHeight(50);
-        btn3.setMinHeight(50);
-
-        ltfLogin = new LabeledTextField("Login: ", LabeledTextField.Mode.TEXTFIELD);
-        ltfPass = new LabeledTextField("Password: ", LabeledTextField.Mode.PASSWORD_FIELD);
+        setStageBoundsAndLocation(WIDTH, WIDTH, screenSize.height, screenSize.height,screenSize.width-WIDTH, 0);
 
         imgPane = new ImagePane("/icon_300x150.png");
         imgPane.setMaxWidth(WIDTH);
         imgPane.setMaxHeight(125);
-    }
 
-    public void addListeners() {
-        btn1.setOnAction(new OpenURLButtonListener("http://www.tu.berlin", ltfLogin.getAccessibleText(), ltfPass.getAccessibleText()));
-        btn2.setOnAction(new OpenURLButtonListener("http://www.isis.tu-berlin.de", ltfLogin.getAccessibleText(), ltfPass.getAccessibleText()));
-        btn3.setOnAction(new OpenURLButtonListener("http://www.moseskonto.tu-berlin.de", ltfLogin.getAccessibleText(), ltfPass.getAccessibleText()));
+        VBox root = new VBox();
+        LinkBox linkBox = new LinkBox();
+        TaskBox taskBox = new TaskBox();
+
+        root.getChildren().addAll(imgPane, new Separator(), linkBox, new Separator(), taskBox);
+        root.setSpacing(10);
+        root.setPadding(new Insets(0,10,10,10));
+        ScrollPane sp = new ScrollPane();
+        sp.setContent(root);
+        sp.setPannable(true); // it means that the user should be able to pan the viewport by using the mouse.
+
+        Scene scene = new Scene(sp, WIDTH, screenSize.height);
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void setStageBoundsAndLocation(double minWidth, double maxWidth, double minHeight, double maxHeight, double x, double y) {
@@ -87,4 +65,25 @@ public class WhiteBoxMain extends Application {
         stage.setX(x);
         stage.setY(y);
     }
+
+    public static double getWidth() {
+        return WIDTH;
+    }
+
+    public static double getNodeHeight() {
+        return NODE_HEIGHT;
+    }
+
+    public static String getDefaultButtonStyle() {
+        return "-fx-text-fill: black; -fx-font-size: 16px";
+    }
+
+    public static double getButtonWidth() {
+        return BUTTON_WIDTH;
+    }
+
+    public static double getButtonHeight() {
+        return BUTTON_HEIGHT;
+    }
+
 }
