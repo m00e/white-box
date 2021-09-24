@@ -5,9 +5,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -16,13 +14,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 
-
 public class Task extends GridPane {
 
     private Label taskNrLbl;
     private CheckBox checkBox;
-    private Button button;
+    private Button editBtn, delBtn;
     private TextField textField;
+
+    private ImagePane editIcon, delIcon;
 
     public Task(int taskNr) {
         setHgap(5);
@@ -32,10 +31,16 @@ public class Task extends GridPane {
         taskNrLbl = new Label("Task #" + taskNr);
         taskNrLbl.setStyle(WhiteBoxMain.getDefaultButtonStyle());
 
+        editIcon = new ImagePane("/edit_icon.png");
+        delIcon = new ImagePane("/delete_icon.png");
+
         checkBox = new CheckBox();
 
-        button = new Button("[X]");
-        button.setStyle(WhiteBoxMain.getDefaultButtonStyle());
+        editBtn = new Button();
+        editBtn.setGraphic(editIcon);
+
+        delBtn = new Button();
+        delBtn.setGraphic(delIcon);
 
         textField = new TextField();
         textField.setStyle("-fx-text-fill: black; -fx-font-size: 16px;");
@@ -51,8 +56,17 @@ public class Task extends GridPane {
             }
         });
 
+        // If button is clicked the task becomes editable.
+        editBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                textField.setEditable(true);
+                textField.setDisable(false);
+            }
+        });
+
         // If button is clicked, mark the task as aborted.
-        button.setOnAction(new EventHandler<ActionEvent>() {
+        delBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 endTask(false);
@@ -72,8 +86,9 @@ public class Task extends GridPane {
 
         add(checkBox,0,0);
         add(taskNrLbl, 1,0);
-        add(button, 2,0);
-        add(textField, 0,1,2,1);
+        add(editBtn, 2,0);
+        add(delBtn, 3,0);
+        add(textField, 0,1,3,1);
     }
 
     /**
@@ -89,6 +104,7 @@ public class Task extends GridPane {
         textField.setDisable(true);
         textField.setEditable(false);
         checkBox.setDisable(true);
-        button.setDisable(true);
+        editBtn.setDisable(true);
+        delBtn.setDisable(true);
     }
 }

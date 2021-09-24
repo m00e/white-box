@@ -4,15 +4,11 @@ import de.m00e.whitebox.components.ImagePane;
 import de.m00e.whitebox.components.LinkBox;
 import de.m00e.whitebox.components.TaskBox;
 import javafx.application.Application;
-import javafx.geometry.Dimension2D;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -39,7 +35,7 @@ public class WhiteBoxMain extends Application {
         stage.setTitle("White Box");
         setStageBoundsAndLocation(WIDTH, WIDTH, screenSize.height*0.75, screenSize.height*0.75);
 
-        imgPane = new ImagePane("/icon_300x150.png");
+        imgPane = new ImagePane("/whitebox_icon.png");
         imgPane.setMaxWidth(WIDTH);
         imgPane.setMaxHeight(125);
 
