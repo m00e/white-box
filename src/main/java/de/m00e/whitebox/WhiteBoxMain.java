@@ -10,6 +10,8 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -19,9 +21,9 @@ public class WhiteBoxMain extends Application {
 
     private Stage stage;
 
-    private static final double WIDTH = 320;
+    private static final double WIDTH = 850;
     private static final double NODE_HEIGHT = 50;
-    private static final double BUTTON_WIDTH = WIDTH-20;
+    private static final double BUTTON_WIDTH = WIDTH/2-20;
     private static final double BUTTON_HEIGHT = NODE_HEIGHT;
     private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -35,35 +37,34 @@ public class WhiteBoxMain extends Application {
     public void start(Stage stage) {
         this.stage = stage;
         stage.setTitle("White Box");
-        setStageBoundsAndLocation(WIDTH, WIDTH, screenSize.height, screenSize.height,screenSize.width-WIDTH, 0);
+        setStageBoundsAndLocation(WIDTH, WIDTH, screenSize.height*0.75, screenSize.height*0.75);
 
         imgPane = new ImagePane("/icon_300x150.png");
         imgPane.setMaxWidth(WIDTH);
         imgPane.setMaxHeight(125);
 
-        VBox root = new VBox();
+        BorderPane rootPane = new BorderPane();
+        HBox hBox = new HBox();
         LinkBox linkBox = new LinkBox();
         TaskBox taskBox = new TaskBox();
 
-        root.getChildren().addAll(imgPane, new Separator(), linkBox, new Separator(), taskBox);
-        root.setSpacing(10);
-        root.setPadding(new Insets(0,10,10,10));
-        ScrollPane sp = new ScrollPane();
-        sp.setContent(root);
-        sp.setPannable(true); // it means that the user should be able to pan the viewport by using the mouse.
+        hBox.getChildren().addAll(linkBox, new Separator(), taskBox);
+        hBox.setSpacing(10);
+        hBox.setPadding(new Insets(0,10,10,10));
 
-        Scene scene = new Scene(sp, WIDTH, screenSize.height);
+        // Add nodes to window and make it visible
+        rootPane.setTop(imgPane);
+        rootPane.setCenter(hBox);
+        Scene scene = new Scene(rootPane, WIDTH, screenSize.height);
         stage.setScene(scene);
         stage.show();
     }
 
-    private void setStageBoundsAndLocation(double minWidth, double maxWidth, double minHeight, double maxHeight, double x, double y) {
+    private void setStageBoundsAndLocation(double minWidth, double maxWidth, double minHeight, double maxHeight) {
         stage.setMinWidth(minWidth);
         stage.setMaxWidth(minWidth);
         stage.setMinHeight(minHeight);
         stage.setMaxHeight(maxHeight);
-        stage.setX(x);
-        stage.setY(y);
     }
 
     public static double getWidth() {

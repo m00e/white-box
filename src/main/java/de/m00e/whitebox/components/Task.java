@@ -5,27 +5,41 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 
 
-public class Task extends FlowPane {
+public class Task extends GridPane {
 
+    private Label taskNrLbl;
     private CheckBox checkBox;
     private Button button;
     private TextField textField;
 
-    public Task() {
+    public Task(int taskNr) {
+        setHgap(5);
+        setVgap(5);
+        setPadding(new Insets(0,5,0,5));
+
+        taskNrLbl = new Label("Task #" + taskNr);
+        taskNrLbl.setStyle(WhiteBoxMain.getDefaultButtonStyle());
+
         checkBox = new CheckBox();
+
         button = new Button("[X]");
+        button.setStyle(WhiteBoxMain.getDefaultButtonStyle());
+
         textField = new TextField();
         textField.setStyle("-fx-text-fill: black; -fx-font-size: 16px;");
+        textField.setMaxWidth(WhiteBoxMain.getWidth());
 
         // If checkBox is checked, mark the task as done.
         checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -56,9 +70,10 @@ public class Task extends FlowPane {
             }
         });
 
-        this.setPadding(new Insets(10,10,10,10));
-        this.getChildren().addAll(checkBox, button, textField);
-
+        add(checkBox,0,0);
+        add(taskNrLbl, 1,0);
+        add(button, 2,0);
+        add(textField, 0,1,2,1);
     }
 
     /**
