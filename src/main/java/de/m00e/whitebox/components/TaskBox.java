@@ -12,6 +12,8 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+import java.util.ArrayList;
+
 public class TaskBox extends VBox {
 
     private final double WIDTH = WhiteBoxMain.getWidth();
@@ -22,8 +24,9 @@ public class TaskBox extends VBox {
     private Button addBtn, clrBtn;
     private Label taskLabel;
     private ScrollPane sp;
-    private VBox taskListBox;
+    private static VBox taskListBox;
 
+    private static ArrayList<Task> taskArrayList;
     private static int taskCounter = 1;
 
     public TaskBox() {
@@ -36,6 +39,8 @@ public class TaskBox extends VBox {
     }
 
     private void setupComponents() {
+        taskArrayList = new ArrayList<Task>();
+
         addBtn = new Button("Add New Task");
         addBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle());
         addBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -59,12 +64,15 @@ public class TaskBox extends VBox {
         sp.setFitToWidth(true);
     }
 
-    public void addListeners() {
+    private void addListeners() {
         // Add single tasks to task list.
         addBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                taskListBox.getChildren().add(new Task(taskCounter));
+                Task task = new Task(taskCounter);
+                taskListBox.getChildren().add(task);
+                taskArrayList.add(task);
+                System.out.println(taskArrayList.size());
                 taskCounter++;
             }
         });
@@ -74,8 +82,18 @@ public class TaskBox extends VBox {
             @Override
             public void handle(ActionEvent event) {
                 taskListBox.getChildren().removeAll(taskListBox.getChildren());
+                taskArrayList.removeAll(taskArrayList);
+                System.out.println(taskArrayList.size());
                 taskCounter = 1;
             }
         });
+    }
+
+    public static ArrayList<Task> getTaskArrayList() {
+        return taskArrayList;
+    }
+
+    public static VBox getTaskListBox() {
+        return taskListBox;
     }
 }

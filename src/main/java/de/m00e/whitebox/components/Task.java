@@ -12,26 +12,65 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 
-public class Task extends GridPane {
+public class Task extends BorderPane {
 
     private Label taskNrLbl;
     private CheckBox checkBox;
-    private Button editBtn, delBtn;
+    private Button editBtn, abortBtn, delBtn;
     private TextField textField;
 
-    private ImagePane editIcon, delIcon;
+    private ImagePane editIcon, abortIcon, delIcon;
+
+    private FlowPane flowPane; // Main menu of each task
+
+    private int taskNr;
 
     public Task(int taskNr) {
-        setHgap(5);
-        setVgap(5);
-        setPadding(new Insets(0,5,0,5));
+        this.taskNr = taskNr;
+
+        setupComponents();
+        addListeners();
+
+        flowPane.getChildren().addAll(checkBox, taskNrLbl, editBtn, abortBtn, delBtn);
+        setTop(flowPane);
+        setCenter(textField);
+    }
+
+    /**
+     * Marks a task as completed successfully or aborted depending on the parameter.
+     * It's not possible to check, edit, abort or delete finished tasks.
+     * @param success
+     */
+    private void endTask(boolean success) {
+        if(success) {
+            textField.setStyle("-fx-text-fill: green; -fx-font-size: 16px;");
+            taskNrLbl.setStyle("-fx-text-fill: green; -fx-font-size: 16px;");
+        } else {
+            textField.setStyle("-fx-text-fill: red; -fx-font-size: 16px;");
+            taskNrLbl.setStyle("-fx-text-fill: red; -fx-font-size: 16px;");
+        }
+
+        textField.setDisable(true);
+        textField.setEditable(false);
+        checkBox.setDisable(true);
+        editBtn.setDisable(true);
+        abortBtn.setDisable(true);
+        delBtn.setDisable(true);
+    }
+
+    private void setupComponents() {
+        flowPane = new FlowPane();
+        flowPane.setHgap(10);
+        flowPane.setPadding(new Insets(0,5,0,5));
 
         taskNrLbl = new Label("Task #" + taskNr);
         taskNrLbl.setStyle(WhiteBoxMain.getDefaultButtonStyle());
 
         editIcon = new ImagePane("/edit_icon.png");
+        abortIcon = new ImagePane("/abort_icon.png");
         delIcon = new ImagePane("/delete_icon.png");
 
         checkBox = new CheckBox();
@@ -39,13 +78,18 @@ public class Task extends GridPane {
         editBtn = new Button();
         editBtn.setGraphic(editIcon);
 
+        abortBtn = new Button();
+        abortBtn.setGraphic(abortIcon);
+
         delBtn = new Button();
         delBtn.setGraphic(delIcon);
 
         textField = new TextField();
         textField.setStyle("-fx-text-fill: black; -fx-font-size: 16px;");
         textField.setMaxWidth(WhiteBoxMain.getWidth());
+    }
 
+    private void addListeners() {
         // If checkBox is checked, mark the task as done.
         checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -66,10 +110,18 @@ public class Task extends GridPane {
         });
 
         // If button is clicked, mark the task as aborted.
-        delBtn.setOnAction(new EventHandler<ActionEvent>() {
+        abortBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 endTask(false);
+            }
+        });
+
+        // If button is clicked, remove the according (this) task.
+        delBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                TaskBox.getTaskListBox().getChildren().remove(taskNr-1);
             }
         });
 
@@ -83,28 +135,5 @@ public class Task extends GridPane {
                 }
             }
         });
-
-        add(checkBox,0,0);
-        add(taskNrLbl, 1,0);
-        add(editBtn, 2,0);
-        add(delBtn, 3,0);
-        add(textField, 0,1,3,1);
-    }
-
-    /**
-     * Marks a task as completed successfully or aborted depending on the parameter.
-     * @param success
-     */
-    private void endTask(boolean success) {
-        if(success)
-            textField.setStyle("-fx-text-fill: green; -fx-font-size: 16px;");
-        else
-            textField.setStyle("-fx-text-fill: red; -fx-font-size: 16px;");
-
-        textField.setDisable(true);
-        textField.setEditable(false);
-        checkBox.setDisable(true);
-        editBtn.setDisable(true);
-        delBtn.setDisable(true);
     }
 }
