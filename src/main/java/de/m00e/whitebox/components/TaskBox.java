@@ -12,8 +12,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-import java.util.ArrayList;
-
 public class TaskBox extends VBox {
 
     private final double WIDTH = WhiteBoxMain.getWidth();
@@ -23,21 +21,14 @@ public class TaskBox extends VBox {
 
     private Button addBtn, clrBtn;
     private Label taskLabel;
+    private ScrollPane sp;
+    private VBox taskListBox;
+
+    private static int taskCounter = 1;
 
     public TaskBox() {
         setupComponents();
-
-
-        ArrayList<Task> tasks = new ArrayList<>();
-        tasks.add(new Task(1));
-        tasks.add(new Task(2));
-        tasks.add(new Task(3));
-
-        // sp just represents the taskBox with scrolling functionality
-        ScrollPane sp = new ScrollPane();
-        sp.setContent();
-        sp.setPannable(true); // it means that the user should be able to pan the viewport by using the mouse.
-        sp.setFitToWidth(true);
+        addListeners();
 
         getChildren().addAll(taskLabel, addBtn, clrBtn, new Separator(), sp);
         setSpacing(10);
@@ -59,17 +50,31 @@ public class TaskBox extends VBox {
         taskLabel.setAlignment(Pos.CENTER);
         taskLabel.setFont(new Font("Courier New", NODE_HEIGHT));
 
+        taskListBox = new VBox();
+
+        // sp just represents the actual task list with the possibility of scrolling.
+        sp = new ScrollPane();
+        sp.setContent(taskListBox);
+        sp.setPannable(true); // it means that the user should be able to pan the viewport by using the mouse.
+        sp.setFitToWidth(true);
+    }
+
+    public void addListeners() {
+        // Add single tasks to task list.
         addBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                taskListBox.getChildren().add(new Task(taskCounter));
+                taskCounter++;
             }
         });
 
+        // Delete all tasks at once.
         clrBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                taskListBox.getChildren().removeAll(taskListBox.getChildren());
+                taskCounter = 1;
             }
         });
     }
