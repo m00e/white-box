@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TaskBox extends VBox {
 
@@ -26,7 +27,7 @@ public class TaskBox extends VBox {
     private ScrollPane sp;
     private static VBox taskListBox;
 
-    private static ArrayList<Task> taskArrayList;
+    private static HashMap<Integer, Task> taskMap;
     private static int taskCounter = 1;
 
     public TaskBox() {
@@ -39,7 +40,7 @@ public class TaskBox extends VBox {
     }
 
     private void setupComponents() {
-        taskArrayList = new ArrayList<Task>();
+        taskMap = new HashMap<Integer, Task>();
 
         addBtn = new Button("Add New Task");
         addBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle());
@@ -71,8 +72,7 @@ public class TaskBox extends VBox {
             public void handle(ActionEvent event) {
                 Task task = new Task(taskCounter);
                 taskListBox.getChildren().add(task);
-                taskArrayList.add(task);
-                System.out.println(taskArrayList.size());
+                taskMap.put(taskCounter,task);
                 taskCounter++;
             }
         });
@@ -82,18 +82,18 @@ public class TaskBox extends VBox {
             @Override
             public void handle(ActionEvent event) {
                 taskListBox.getChildren().removeAll(taskListBox.getChildren());
-                taskArrayList.removeAll(taskArrayList);
-                System.out.println(taskArrayList.size());
+                taskMap.clear();
                 taskCounter = 1;
             }
         });
     }
 
-    public static ArrayList<Task> getTaskArrayList() {
-        return taskArrayList;
-    }
-
-    public static VBox getTaskListBox() {
-        return taskListBox;
+    /**
+     * Remove a task from the task list.
+     * @param taskNr Task that should be removed.
+     */
+    public static void removeTask(int taskNr) {
+        taskListBox.getChildren().remove(taskMap.get(taskNr));
+        taskMap.remove(taskNr);
     }
 }

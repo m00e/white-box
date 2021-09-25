@@ -121,7 +121,7 @@ public class Task extends BorderPane {
         delBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                TaskBox.getTaskListBox().getChildren().remove(taskNr-1);
+                TaskBox.removeTask(taskNr);
             }
         });
 
