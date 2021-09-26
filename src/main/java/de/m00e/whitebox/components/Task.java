@@ -27,9 +27,11 @@ public class Task extends BorderPane {
     private FlowPane flowPane; // Main menu of each task
 
     private int taskNr;
+    private Status status;
 
     public Task(int taskNr) {
         this.taskNr = taskNr;
+        status = Status.RUNNING;
 
         setupComponents();
         addListeners();
@@ -48,9 +50,11 @@ public class Task extends BorderPane {
         if(success) {
             textField.setStyle("-fx-text-fill: green; -fx-font-size: 16px;");
             taskNrLbl.setStyle("-fx-text-fill: green; -fx-font-size: 16px;");
+            status = Status.DONE;
         } else {
             textField.setStyle("-fx-text-fill: red; -fx-font-size: 16px;");
             taskNrLbl.setStyle("-fx-text-fill: red; -fx-font-size: 16px;");
+            status = Status.ABORTED;
         }
 
         textField.setDisable(true);
@@ -135,5 +139,17 @@ public class Task extends BorderPane {
                 }
             }
         });
+    }
+
+    @Override
+    public String toString() {
+        // TODO: Maybe refactor ???
+        return taskNr + ";" + status + ";" + textField.getText();
+    }
+
+    public enum Status {
+        DONE,
+        ABORTED,
+        RUNNING;
     }
 }
