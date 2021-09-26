@@ -135,9 +135,6 @@ public class TaskBox extends VBox {
 
         writer = new PrintWriter(tasksFile);
 
-        for (Node child : taskListBox.getChildren()) {
-            System.out.println(child.toString());
-        }
         taskListBox.getChildren().forEach(t -> writer.write(t.toString() + "\n"));
 
         writer.flush();
@@ -149,7 +146,9 @@ public class TaskBox extends VBox {
      * @param tasksFile File to load from
      */
     public static void loadTasks(File tasksFile) throws IOException {
-        resetTaskBox(); // Taskbox and hashmap must be cleared to refill them later
+        //TODO: Automatically save file as .tasks file.
+        //TODO: Maybe reset task box AFTER file has been read?
+        resetTaskBox(); // Task box and hashmap must be cleared to refill them later
 
         // Read and split task strings at semicolons and add new tasks to task box and hashmap.
         FileReader fileReader = new FileReader(tasksFile);
@@ -157,9 +156,7 @@ public class TaskBox extends VBox {
         String line = null;
         while((line = bufferedReader.readLine()) != null) {
             String[] info = line.split(";");
-
-            // TODO: Add functionality to save the status and task string with constructor
-            taskListBox.getChildren().add(new Task(Integer.parseInt(info[0])));
+            taskListBox.getChildren().add(new Task(info));
         }
         bufferedReader.close();
 

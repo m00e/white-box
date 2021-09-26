@@ -4,7 +4,6 @@ import de.m00e.whitebox.components.TaskBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 
 import java.io.File;

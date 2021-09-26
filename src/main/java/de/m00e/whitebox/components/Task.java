@@ -41,6 +41,38 @@ public class Task extends BorderPane {
         setCenter(textField);
     }
 
+    public Task(String info[]) {
+        this.taskNr = Integer.parseInt(info[0]);
+        this.status = Status.valueOf(info[1]);
+
+        setupComponents();
+        addListeners();
+
+        if(info.length == 3)
+            textField.setText(info[2]);
+        else
+            textField.setText("");
+
+        switch(status) {
+            case DONE:
+                checkBox.setSelected(true);
+                endTask(true);
+                break;
+            case ABORTED:
+                endTask(false);
+                break;
+            case RUNNING:
+                // Task text field should be disabled and uneditable nonetheless.
+                textField.setDisable(true);
+                textField.setEditable(false);
+                break;
+        }
+
+        flowPane.getChildren().addAll(checkBox, taskNrLbl, editBtn, abortBtn, delBtn);
+        setTop(flowPane);
+        setCenter(textField);
+    }
+
     /**
      * Marks a task as completed successfully or aborted depending on the parameter.
      * It's not possible to check, edit, abort or delete finished tasks.
