@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -17,11 +16,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TaskBox extends VBox {
 
+    private static File currFile; // Remember the file the user is working on.
     private final double WIDTH = WhiteBoxMain.getWidth();
     private final double NODE_HEIGHT = WhiteBoxMain.getNodeHeight();
     private final double BUTTON_WIDTH = WhiteBoxMain.getButtonWidth();
@@ -139,6 +138,8 @@ public class TaskBox extends VBox {
 
         writer.flush();
         writer.close();
+
+        currFile = tasksFile;
     }
 
     /**
@@ -147,7 +148,6 @@ public class TaskBox extends VBox {
      */
     public static void loadTasks(File tasksFile) throws IOException {
         //TODO: Automatically save file as .tasks file.
-        //TODO: Maybe reset task box AFTER file has been read?
         resetTaskBox(); // Task box and hashmap must be cleared to refill them later
 
         // Read and split task strings at semicolons and add new tasks to task box and hashmap.
@@ -160,6 +160,7 @@ public class TaskBox extends VBox {
         }
         bufferedReader.close();
 
+        currFile = tasksFile;
     }
 
     /**
@@ -169,5 +170,9 @@ public class TaskBox extends VBox {
         taskListBox.getChildren().removeAll(taskListBox.getChildren());
         taskMap.clear();
         taskCounter = 1;
+    }
+
+    public static File getRecentFile() {
+        return currFile;
     }
 }

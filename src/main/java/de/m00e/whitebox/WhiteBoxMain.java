@@ -33,7 +33,9 @@ public class WhiteBoxMain extends Application {
     public void start(Stage stage) {
         this.stage = stage;
         stage.setTitle("White Box");
-        setStageBoundsAndLocation(WIDTH, WIDTH, screenSize.height*0.75, screenSize.height*0.75);
+        stage.setResizable(false);
+        stage.setWidth(WIDTH);
+        stage.setHeight(screenSize.getHeight()*0.75);
 
         imgPane = new ImagePane("/whitebox_icon.png");
         imgPane.setMaxWidth(WIDTH);

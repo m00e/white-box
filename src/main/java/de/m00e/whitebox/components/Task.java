@@ -53,6 +53,7 @@ public class Task extends BorderPane {
         else
             textField.setText("");
 
+        // Done or aborted tasks must be marked as end immediately, otherwise they are still considered running
         switch(status) {
             case DONE:
                 checkBox.setSelected(true);

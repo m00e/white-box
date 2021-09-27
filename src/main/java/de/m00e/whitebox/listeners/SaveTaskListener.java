@@ -20,10 +20,20 @@ public class SaveTaskListener implements EventHandler<ActionEvent> {
         extensionFilter = new FileChooser.ExtensionFilter("TASKS files (*.tasks)", "*.tasks");
 
     }
+
     @Override
     public void handle(ActionEvent event) {
-        f = fc.showSaveDialog(((Node) event.getTarget()).getScene().getWindow());
         try {
+            /* First look if there is already a file the user works on.
+             If there is one, save it in there. */
+            // BUG: If such a file exists, then it is not possible (in the same session) to save to tasks into another file
+            if(TaskBox.getRecentFile() == null) {
+                f = fc.showSaveDialog(((Node) event.getTarget()).getScene().getWindow());
+                if(f == null) return;
+            } else {
+                f = TaskBox.getRecentFile();
+            }
+
             TaskBox.saveTasks(f);
         } catch (IOException e) {
             e.printStackTrace();

@@ -25,6 +25,7 @@ public class LoadTaskListener implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         f = fc.showOpenDialog(((Node) event.getTarget()).getScene().getWindow());
+        if(f == null) return;
         try {
             TaskBox.loadTasks(f);
         } catch (IOException e) {
