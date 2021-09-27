@@ -15,7 +15,12 @@ public class SaveTaskListener implements EventHandler<ActionEvent> {
     private FileChooser.ExtensionFilter extensionFilter;
     private File f;
 
-    public SaveTaskListener() {
+    // Decides if the task list is saved into a new file despite a current working file existing.
+    private boolean saveIntoNew;
+
+    public SaveTaskListener(boolean saveIntoNew) {
+        this.saveIntoNew = saveIntoNew;
+
         fc = new FileChooser();
         extensionFilter = new FileChooser.ExtensionFilter("TASKS files (*.tasks)", "*.tasks");
 
@@ -27,7 +32,8 @@ public class SaveTaskListener implements EventHandler<ActionEvent> {
             /* First look if there is already a file the user works on.
              If there is one, save it in there. */
             // BUG: If such a file exists, then it is not possible (in the same session) to save to tasks into another file
-            if(TaskBox.getRecentFile() == null) {
+            //TODO: Solve with Clear Button??
+            if(saveIntoNew || TaskBox.getRecentFile() == null) {
                 f = fc.showSaveDialog(((Node) event.getTarget()).getScene().getWindow());
                 if(f == null) return;
             } else {

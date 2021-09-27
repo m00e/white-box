@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -21,13 +22,14 @@ import java.util.HashMap;
 public class TaskBox extends VBox {
 
     private static File currFile; // Remember the file the user is working on.
+
     private final double WIDTH = WhiteBoxMain.getWidth();
     private final double NODE_HEIGHT = WhiteBoxMain.getNodeHeight();
     private final double BUTTON_WIDTH = WhiteBoxMain.getButtonWidth();
     private final double BUTTON_HEIGHT = WhiteBoxMain.getButtonHeight()-20;
 
-    private Button addBtn, clrBtn, saveBtn, loadBtn;
-    private Label taskLabel;
+    private Button addBtn, clrBtn, saveBtn, saveAsBtn, loadBtn;
+    private static Label taskLabel, currFileLabel;;
     private ScrollPane sp;
     private static VBox taskListBox;
 
@@ -35,6 +37,7 @@ public class TaskBox extends VBox {
     private static int taskCounter = 1;
 
     private GridPane btnPane;
+    private BorderPane saveBtnPane; // Containing save and save-as button.
 
     public TaskBox() {
         setupComponents();
@@ -42,9 +45,12 @@ public class TaskBox extends VBox {
 
         btnPane.add(addBtn,0,0);
         btnPane.add(clrBtn,0,1);
-        btnPane.add(saveBtn,1,0);
+        btnPane.add(saveBtnPane,1,0);
         btnPane.add(loadBtn,1,1);
-        getChildren().addAll(taskLabel, btnPane, new Separator(), sp);
+
+        saveBtnPane.setCenter(saveBtn);
+        saveBtnPane.setRight(saveAsBtn);
+        getChildren().addAll(taskLabel, btnPane, currFileLabel, new Separator(), sp);
         setSpacing(10);
         setPadding(new Insets(0,10,10,10));
     }
@@ -55,21 +61,27 @@ public class TaskBox extends VBox {
         btnPane.setHgap(5);
         btnPane.setVgap(5);
 
+        saveBtnPane = new BorderPane();
+
         taskMap = new HashMap<Integer, Task>();
 
-        addBtn = new Button("Add New Task");
+        addBtn = new Button("Add Task");
         addBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle());
         addBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
-        clrBtn = new Button("Clear All Tasks");
+        clrBtn = new Button("Clear Tasks");
         clrBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle());
         clrBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
-        saveBtn = new Button("Save Task List");
+        saveBtn = new Button("Save Tasks");
         saveBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle());
         saveBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
-        loadBtn = new Button("Load Task List");
+        saveAsBtn = new Button("...");
+        saveAsBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle());
+        saveAsBtn.setPrefHeight(BUTTON_HEIGHT);
+
+        loadBtn = new Button("Load Tasks");
         loadBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle());
         loadBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
@@ -79,6 +91,8 @@ public class TaskBox extends VBox {
         taskLabel.setAlignment(Pos.CENTER);
         taskLabel.setFont(new Font("Courier New", NODE_HEIGHT));
 
+        currFileLabel = new Label();
+
         taskListBox = new VBox();
 
         // sp just represents the actual task list with the possibility of scrolling.
@@ -86,8 +100,6 @@ public class TaskBox extends VBox {
         sp.setContent(taskListBox);
         sp.setPannable(true); // it means that the user should be able to pan the viewport by using the mouse.
         sp.setFitToWidth(true);
-
-
     }
 
     private void addListeners() {
@@ -110,7 +122,8 @@ public class TaskBox extends VBox {
             }
         });
 
-        saveBtn.setOnAction(new SaveTaskListener());
+        saveBtn.setOnAction(new SaveTaskListener(false)); // Only save into new file if no current file exists
+        saveAsBtn.setOnAction(new SaveTaskListener(true)); // Always save into a new file
         loadBtn.setOnAction(new LoadTaskListener());
     }
 
@@ -140,6 +153,7 @@ public class TaskBox extends VBox {
         writer.close();
 
         currFile = tasksFile;
+        currFileLabel.setText("Saved to " + currFile.getAbsolutePath());
     }
 
     /**
@@ -161,6 +175,7 @@ public class TaskBox extends VBox {
         bufferedReader.close();
 
         currFile = tasksFile;
+        currFileLabel.setText("Loaded from " + currFile.getAbsolutePath());
     }
 
     /**
