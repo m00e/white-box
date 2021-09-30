@@ -24,7 +24,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'de.m00e.whitebox.whitebox'
-    mainClass = 'de.m00e.whitebox.whitebox.WhiteBoxMain'
+    mainClass = 'de.m00e.whitebox.WhiteBoxMain'
 }
 
 javafx {
@@ -52,4 +52,10 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'de.m00e.whitebox.WhiteBoxMain'
+    }
 }
