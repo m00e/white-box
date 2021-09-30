@@ -32,13 +32,12 @@ public class PomodoroBox extends VBox {
         setPadding(new Insets(0,10,10,10));
     }
 
-
     private void setupComponents() {
         pomodoroLabel = new Label("POMODORO");
         pomodoroLabel.setPrefHeight(NODE_HEIGHT);
         pomodoroLabel.setPrefWidth(WIDTH-20);
         pomodoroLabel.setAlignment(Pos.CENTER);
-        pomodoroLabel.setFont(new Font("Courier New", NODE_HEIGHT));
+        pomodoroLabel.setFont(new Font("Arial", NODE_HEIGHT));
 
         pomodoroTimer = new PomodoroTimer();
 
@@ -60,7 +59,10 @@ public class PomodoroBox extends VBox {
     }
 
     public void addListeners() {
-
+        // TODO: Implement
     }
 
+    public int getSessionTime() { return Integer.parseInt(sessionTimeBox.getAccessibleText());}
+    public int getSmallBreakTime() { return Integer.parseInt(smallBreakTimeBox.getAccessibleText());}
+    public int getBigBreakTime() { return Integer.parseInt(bigBreakTimeBox.getAccessibleText());}
 }

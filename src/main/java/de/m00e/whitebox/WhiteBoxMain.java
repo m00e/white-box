@@ -37,7 +37,7 @@ public class WhiteBoxMain extends Application {
         stage.setWidth(WIDTH);
         stage.setHeight(screenSize.getHeight()*0.75);
 
-        imgPane = new ImagePane("/whitebox_icon.png");
+        imgPane = new ImagePane("/whitebox_icon.png"); // Load main icon
         imgPane.setMaxWidth(WIDTH);
         imgPane.setMaxHeight(125);
 
@@ -58,7 +58,7 @@ public class WhiteBoxMain extends Application {
         stage.show();
     }
 
-    private void setStageBoundsAndLocation(double minWidth, double maxWidth, double minHeight, double maxHeight) {
+    private void setStageSize(double minWidth, double maxWidth, double minHeight, double maxHeight) {
         stage.setMinWidth(minWidth);
         stage.setMaxWidth(minWidth);
         stage.setMinHeight(minHeight);
@@ -73,10 +73,6 @@ public class WhiteBoxMain extends Application {
         return NODE_HEIGHT;
     }
 
-    public static String getDefaultButtonStyle() {
-        return "-fx-text-fill: black; -fx-font-size: 16px";
-    }
-
     public static double getButtonWidth() {
         return BUTTON_WIDTH;
     }
@@ -85,4 +81,7 @@ public class WhiteBoxMain extends Application {
         return BUTTON_HEIGHT;
     }
 
+    public static String getDefaultButtonStyle() {
+        return "-fx-text-fill: black; -fx-font-size: 16px";
+    }
 }

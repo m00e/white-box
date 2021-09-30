@@ -87,7 +87,7 @@ public class TaskBox extends VBox {
         taskLabel.setPrefHeight(NODE_HEIGHT);
         taskLabel.setPrefWidth(WIDTH-20);
         taskLabel.setAlignment(Pos.CENTER);
-        taskLabel.setFont(new Font("Courier New", NODE_HEIGHT));
+        taskLabel.setFont(new Font("Arial", NODE_HEIGHT));
 
         currFileLabel = new Label();
 
