@@ -1,7 +1,7 @@
 package de.m00e.whitebox;
 
 import de.m00e.whitebox.components.ImagePane;
-import de.m00e.whitebox.components.LinkBox;
+import de.m00e.whitebox.components.PomodoroBox;
 import de.m00e.whitebox.components.TaskBox;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -43,10 +43,10 @@ public class WhiteBoxMain extends Application {
 
         BorderPane rootPane = new BorderPane();
         HBox hBox = new HBox();
-        LinkBox linkBox = new LinkBox();
+        PomodoroBox pomodoroBox = new PomodoroBox();
         TaskBox taskBox = new TaskBox();
 
-        hBox.getChildren().addAll(linkBox, new Separator(), taskBox);
+        hBox.getChildren().addAll(pomodoroBox, new Separator(), taskBox);
         hBox.setSpacing(10);
         hBox.setPadding(new Insets(0,10,10,10));
 

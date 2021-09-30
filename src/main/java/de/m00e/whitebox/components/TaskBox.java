@@ -3,8 +3,6 @@ package de.m00e.whitebox.components;
 import de.m00e.whitebox.WhiteBoxMain;
 import de.m00e.whitebox.listeners.LoadTaskListener;
 import de.m00e.whitebox.listeners.SaveTaskListener;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -29,7 +27,7 @@ public class TaskBox extends VBox {
     private final double BUTTON_HEIGHT = WhiteBoxMain.getButtonHeight()-20;
 
     private Button addBtn, clrBtn, saveBtn, saveAsBtn, loadBtn;
-    private static Label taskLabel, currFileLabel;;
+    private static Label taskLabel, currFileLabel;
     private ScrollPane sp;
     private static VBox taskListBox;
 
@@ -63,7 +61,7 @@ public class TaskBox extends VBox {
 
         saveBtnPane = new BorderPane();
 
-        taskMap = new HashMap<Integer, Task>();
+        taskMap = new HashMap<>();
 
         addBtn = new Button("Add Task");
         addBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle());
@@ -104,23 +102,15 @@ public class TaskBox extends VBox {
 
     private void addListeners() {
         // Add single tasks to task list.
-        addBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Task task = new Task(taskCounter);
-                taskListBox.getChildren().add(task);
-                taskMap.put(taskCounter,task);
-                taskCounter++;
-            }
+        addBtn.setOnAction(event -> {
+            Task task = new Task(taskCounter);
+            taskListBox.getChildren().add(task);
+            taskMap.put(taskCounter,task);
+            taskCounter++;
         });
 
         // Delete all tasks at once.
-        clrBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                resetTaskBox();
-            }
-        });
+        clrBtn.setOnAction(event -> resetTaskBox());
 
         saveBtn.setOnAction(new SaveTaskListener(false)); // Only save into new file if no current file exists
         saveAsBtn.setOnAction(new SaveTaskListener(true)); // Always save into a new file
@@ -167,7 +157,7 @@ public class TaskBox extends VBox {
         // Read and split task strings at semicolons and add new tasks to task box and hashmap.
         FileReader fileReader = new FileReader(tasksFile);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String line = null;
+        String line;
         while((line = bufferedReader.readLine()) != null) {
             String[] info = line.split(";");
             taskListBox.getChildren().add(new Task(info));
