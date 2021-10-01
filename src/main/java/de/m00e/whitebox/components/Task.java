@@ -138,29 +138,18 @@ public class Task extends BorderPane {
         });
 
         // If button is clicked the task becomes editable.
-        editBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
+        editBtn.setOnAction(event ->
+            {
                 textField.setEditable(true);
                 textField.setDisable(false);
             }
-        });
+        );
 
         // If button is clicked, mark the task as aborted.
-        abortBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                endTask(false);
-            }
-        });
+        abortBtn.setOnAction(event -> endTask(false));
 
         // If button is clicked, remove the according (this) task.
-        delBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                TaskBox.removeTask(taskNr);
-            }
-        });
+        delBtn.setOnAction(event -> TaskBox.removeTask(taskNr));
 
         // If enter key is pressed, make it impossible to edit textfield
         textField.setOnKeyPressed(new EventHandler<KeyEvent>() {

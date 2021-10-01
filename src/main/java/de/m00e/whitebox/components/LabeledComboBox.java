@@ -23,4 +23,6 @@ public class LabeledComboBox extends BorderPane {
         this.setCenter(lbl);
         this.setRight(comboBox);
     }
+
+    public ComboBox<Integer> getComboBox() {return comboBox;}
 }

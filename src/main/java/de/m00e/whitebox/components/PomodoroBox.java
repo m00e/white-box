@@ -15,15 +15,19 @@ public class PomodoroBox extends VBox {
     private final double BUTTON_WIDTH = WhiteBoxMain.getButtonWidth();
     private final double BUTTON_HEIGHT = WhiteBoxMain.getButtonHeight();
 
-    private Button startBtn, abortBtn; //Start button also stop button
+    private Button startBtn, abortBtn; //Start button is also stop button
     private Label pomodoroLabel;
     private LabeledComboBox sessionTimeBox, smallBreakTimeBox, bigBreakTimeBox;
 
     private VBox controlPane;
-
     private PomodoroTimer pomodoroTimer;
 
+    private static boolean running, hasStarted;
+
     public PomodoroBox() {
+        running = false;
+        hasStarted = false;
+
         setupComponents();
         addListeners();
 
@@ -59,10 +63,57 @@ public class PomodoroBox extends VBox {
     }
 
     public void addListeners() {
-        // TODO: Implement
+        startBtn.setOnAction(event ->
+            {
+                // Only set true the first time the timer has started.
+                if(!hasStarted)
+                    initStart();
+
+                if(isRunning()) {
+                    startBtn.setText("Start");
+                    running = false;
+                } else {
+                    startBtn.setText("Stop");
+                    running = true;
+                }
+            });
+
+        abortBtn.setOnAction(event ->
+        {
+            startBtn.setText("Start");
+            running = false;
+            hasStarted = false;
+            sessionTimeBox.setDisable(false);
+            smallBreakTimeBox.setDisable(false);
+            bigBreakTimeBox.setDisable(false);
+
+            PomodoroTimer.closeTimerStage();
+        });
+
+        // TODO: Add listeners for all comboboxes
+        /*cmbComp.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            System.out.println(newValue);
+        });*/
+
     }
 
-    public int getSessionTime() { return Integer.parseInt(sessionTimeBox.getAccessibleText());}
-    public int getSmallBreakTime() { return Integer.parseInt(smallBreakTimeBox.getAccessibleText());}
-    public int getBigBreakTime() { return Integer.parseInt(bigBreakTimeBox.getAccessibleText());}
+    /**
+     * Method that is only called the first time the pomodoro timer has started.
+     */
+    private void initStart() {
+        hasStarted = true;
+        sessionTimeBox.setDisable(true);
+        smallBreakTimeBox.setDisable(true);
+        bigBreakTimeBox.setDisable(true);
+
+        PomodoroTimer.createTimerStage();
+    }
+
+    /**
+     * Returns whether timer is running or not.
+     * @return running
+     */
+    public static boolean isRunning() {
+        return running;
+    }
 }
