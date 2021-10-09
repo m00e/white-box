@@ -64,23 +64,23 @@ public class TaskBox extends VBox {
         taskMap = new HashMap<>();
 
         addBtn = new Button("Add Task");
-        addBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle());
+        addBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black"));
         addBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
         clrBtn = new Button("Clear Tasks");
-        clrBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle());
+        clrBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black"));
         clrBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
         saveBtn = new Button("Save Tasks");
-        saveBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle());
+        saveBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black"));
         saveBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
         saveAsBtn = new Button("...");
-        saveAsBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle());
+        saveAsBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black"));
         saveAsBtn.setPrefHeight(BUTTON_HEIGHT);
 
         loadBtn = new Button("Load Tasks");
-        loadBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle());
+        loadBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black"));
         loadBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
         taskLabel = new Label("TASKS");
@@ -131,12 +131,8 @@ public class TaskBox extends VBox {
      * @param tasksFile File to save in
      */
     public static void saveTasks(File tasksFile) throws IOException {
-        PrintWriter writer;
-        if(!tasksFile.exists())
-            tasksFile.createNewFile();
-
-        writer = new PrintWriter(tasksFile);
-
+        //TODO: Automatically save file as .tasks file.
+        PrintWriter writer = new PrintWriter(tasksFile);
         taskListBox.getChildren().forEach(t -> writer.write(t.toString() + "\n"));
 
         writer.flush();
@@ -151,7 +147,6 @@ public class TaskBox extends VBox {
      * @param tasksFile File to load from
      */
     public static void loadTasks(File tasksFile) throws IOException {
-        //TODO: Automatically save file as .tasks file.
         resetTaskBox(); // Task box and hashmap must be cleared to refill them later
 
         // Read and split task strings at semicolons and add new tasks to task box and hashmap.

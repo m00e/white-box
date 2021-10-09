@@ -63,13 +63,6 @@ public class WhiteBoxMain extends Application {
         stage.show();
     }
 
-    private void setStageSize(double minWidth, double maxWidth, double minHeight, double maxHeight) {
-        stage.setMinWidth(minWidth);
-        stage.setMaxWidth(minWidth);
-        stage.setMinHeight(minHeight);
-        stage.setMaxHeight(maxHeight);
-    }
-
     public static double getWidth() {
         return WIDTH;
     }
@@ -86,7 +79,11 @@ public class WhiteBoxMain extends Application {
         return BUTTON_HEIGHT;
     }
 
-    public static String getDefaultButtonStyle() {
-        return "-fx-text-fill: black; -fx-font-size: 16px";
+    public static String getDefaultButtonStyle(String textColor) {
+        return "-fx-text-fill: " + textColor + "; -fx-font-size: 16px;";
+    }
+
+    public static String getDefaultButtonStyle(String textColor, String backgroundColor) {
+        return "-fx-text-fill: " + textColor + "; -fx-background-color: " + backgroundColor + "; -fx-font-size: 16px;";
     }
 }

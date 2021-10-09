@@ -104,7 +104,7 @@ public class Task extends BorderPane {
         flowPane.setPadding(new Insets(0,5,0,5));
 
         taskNrLbl = new Label("Task #" + taskNr);
-        taskNrLbl.setStyle(WhiteBoxMain.getDefaultButtonStyle());
+        taskNrLbl.setStyle(WhiteBoxMain.getDefaultButtonStyle("black", "white"));
 
         editIcon = new ImagePane("/edit_icon.png");
         abortIcon = new ImagePane("/abort_icon.png");

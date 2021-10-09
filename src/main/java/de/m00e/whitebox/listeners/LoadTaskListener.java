@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class LoadTaskListener implements EventHandler<ActionEvent> {
