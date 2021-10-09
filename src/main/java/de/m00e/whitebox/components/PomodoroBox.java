@@ -15,23 +15,22 @@ public class PomodoroBox extends VBox {
     private final double BUTTON_WIDTH = WhiteBoxMain.getButtonWidth();
     private final double BUTTON_HEIGHT = WhiteBoxMain.getButtonHeight();
 
-    private Button startBtn, abortBtn; //Start button is also stop button
-    private Label pomodoroLabel;
-    private LabeledComboBox sessionTimeBox, smallBreakTimeBox, bigBreakTimeBox;
+    private static Button startBtn, abortBtn; //Start button is also stop button
+    private static Label pomodoroLabel;
+    private static LabeledComboBox sessionTimeBox, smallBreakTimeBox, longBreakTimeBox;
 
     private VBox controlPane;
-    private PomodoroTimer pomodoroTimer;
+    private static PomodoroWindow pomodoroWindow;
 
-    private static boolean running, hasStarted;
+    private static boolean hasStarted;
 
     public PomodoroBox() {
-        running = false;
         hasStarted = false;
 
         setupComponents();
         addListeners();
 
-        getChildren().addAll(pomodoroLabel, pomodoroTimer, controlPane);
+        getChildren().addAll(pomodoroLabel, controlPane);
         setSpacing(10);
         setPadding(new Insets(0,10,10,10));
     }
@@ -43,11 +42,9 @@ public class PomodoroBox extends VBox {
         pomodoroLabel.setAlignment(Pos.CENTER);
         pomodoroLabel.setFont(new Font("Arial", NODE_HEIGHT));
 
-        pomodoroTimer = new PomodoroTimer();
-
         sessionTimeBox = new LabeledComboBox("Session-Time (in minutes)", 20,60);
         smallBreakTimeBox = new LabeledComboBox("Small Breaks (in minutes)", 5,15);
-        bigBreakTimeBox = new LabeledComboBox("Big Breaks (in minutes)", 15,60);
+        longBreakTimeBox = new LabeledComboBox("Big Breaks (in minutes)", 15,60);
 
         startBtn = new Button("Start");
         startBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle());
@@ -58,8 +55,7 @@ public class PomodoroBox extends VBox {
         abortBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
         controlPane = new VBox();
-        controlPane.getChildren().addAll(sessionTimeBox, smallBreakTimeBox, bigBreakTimeBox, startBtn, abortBtn);
-        controlPane.setStyle("-fx-border-color: black"); // Adds a black border to the pane.
+        controlPane.getChildren().addAll(sessionTimeBox, smallBreakTimeBox, longBreakTimeBox, startBtn, abortBtn);
     }
 
     public void addListeners() {
@@ -69,31 +65,17 @@ public class PomodoroBox extends VBox {
                 if(!hasStarted)
                     initStart();
 
-                if(isRunning()) {
+                if(startBtn.getText().equals("Stop")) {
                     startBtn.setText("Start");
-                    running = false;
+                    //pomodoroWindow.getTimer().stop();
                 } else {
                     startBtn.setText("Stop");
-                    running = true;
+                    System.out.println("test2");
+                    //pomodoroWindow.getTimer().start();
                 }
             });
 
-        abortBtn.setOnAction(event ->
-        {
-            startBtn.setText("Start");
-            running = false;
-            hasStarted = false;
-            sessionTimeBox.setDisable(false);
-            smallBreakTimeBox.setDisable(false);
-            bigBreakTimeBox.setDisable(false);
-
-            PomodoroTimer.closeTimerStage();
-        });
-
-        // TODO: Add listeners for all comboboxes
-        /*cmbComp.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            System.out.println(newValue);
-        });*/
+        abortBtn.setOnAction(event -> abortTimer());
 
     }
 
@@ -104,16 +86,27 @@ public class PomodoroBox extends VBox {
         hasStarted = true;
         sessionTimeBox.setDisable(true);
         smallBreakTimeBox.setDisable(true);
-        bigBreakTimeBox.setDisable(true);
+        longBreakTimeBox.setDisable(true);
+        startBtn.setText("Stop");
 
-        PomodoroTimer.createTimerStage();
+        pomodoroWindow = new PomodoroWindow();
+        pomodoroWindow.initializePhases(sessionTimeBox.getComboBox().getValue(),
+                smallBreakTimeBox.getComboBox().getValue(),
+                longBreakTimeBox.getComboBox().getValue());
+
+        pomodoroWindow.runTimer();
     }
 
     /**
-     * Returns whether timer is running or not.
-     * @return running
+     * Stops the timer and closes the window.
      */
-    public static boolean isRunning() {
-        return running;
+    public static void abortTimer() {
+        startBtn.setText("Start");
+        //pomodoroWindow.getTimer().stop();
+        pomodoroWindow.getTimerStage().close();
+        hasStarted = false;
+        sessionTimeBox.setDisable(false);
+        smallBreakTimeBox.setDisable(false);
+        longBreakTimeBox.setDisable(false);
     }
 }

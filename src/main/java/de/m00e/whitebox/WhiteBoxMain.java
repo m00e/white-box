@@ -1,7 +1,6 @@
 package de.m00e.whitebox;
 
 import de.m00e.whitebox.components.ImagePane;
-import de.m00e.whitebox.components.InfoPane;
 import de.m00e.whitebox.components.PomodoroBox;
 import de.m00e.whitebox.components.TaskBox;
 import javafx.application.Application;
@@ -30,7 +29,6 @@ public class WhiteBoxMain extends Application {
     private HBox hBox;
     private PomodoroBox pomodoroBox;
     private TaskBox taskBox;
-    private InfoPane infoPane;
 
     public static void main(String[] args) {
         launch(args);
@@ -52,7 +50,6 @@ public class WhiteBoxMain extends Application {
         hBox = new HBox();
         pomodoroBox = new PomodoroBox();
         taskBox = new TaskBox();
-        infoPane = new InfoPane();
 
         hBox.getChildren().addAll(pomodoroBox, new Separator(), taskBox);
         hBox.setSpacing(10);
@@ -61,7 +58,6 @@ public class WhiteBoxMain extends Application {
         // Add nodes to window and make it visible
         rootPane.setTop(imgPane);
         rootPane.setCenter(hBox);
-        rootPane.setBottom(infoPane);
         Scene scene = new Scene(rootPane, WIDTH, screenSize.height);
         stage.setScene(scene);
         stage.show();
