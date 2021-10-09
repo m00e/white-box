@@ -3,7 +3,6 @@ package de.m00e.whitebox.components;
 import de.m00e.whitebox.WhiteBoxMain;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -104,7 +103,7 @@ public class Task extends BorderPane {
         flowPane.setPadding(new Insets(0,5,0,5));
 
         taskNrLbl = new Label("Task #" + taskNr);
-        taskNrLbl.setStyle(WhiteBoxMain.getDefaultButtonStyle("black", "white"));
+        taskNrLbl.setStyle(WhiteBoxMain.getDefaultStyle("black", "white"));
 
         editIcon = new ImagePane("/edit_icon.png");
         abortIcon = new ImagePane("/abort_icon.png");

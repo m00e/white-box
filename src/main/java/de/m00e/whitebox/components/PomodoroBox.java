@@ -53,13 +53,14 @@ public class PomodoroBox extends VBox {
         longBreakTimeBox = new LabeledComboBox("Long Breaks:", 15,60);
 
         startBtn = new Button("Start");
-        startBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black"));
+        startBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
         startBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         startBtn.setOnAction(new StartStopListener());
 
         abortBtn = new Button("Abort");
-        abortBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black"));
+        abortBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
         abortBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        abortBtn.setDisable(true); // Abort button shouldn't be usable if timer hasn't started yet.
         abortBtn.setOnAction(new AbortListener());
 
         controlPane = new VBox();
@@ -76,6 +77,7 @@ public class PomodoroBox extends VBox {
         sessionTimeBox.setDisable(true);
         smallBreakTimeBox.setDisable(true);
         longBreakTimeBox.setDisable(true);
+        abortBtn.setDisable(false);
         startBtn.setText("Stop");
 
         pomodoroWindow = new PomodoroWindow();
@@ -97,20 +99,16 @@ public class PomodoroBox extends VBox {
         sessionTimeBox.setDisable(false);
         smallBreakTimeBox.setDisable(false);
         longBreakTimeBox.setDisable(false);
+        abortBtn.setDisable(true);
     }
 
     public static void setRunning(boolean run) {
         running = run;
     }
 
-    public static Button getStartBtn() {
-        return startBtn;
-    }
-
-    public static boolean isRunning() {
-        return running;
-    }
-
+    public static Button getStartBtn() { return startBtn; }
+    public static PomodoroWindow getPomodoroWindow() { return pomodoroWindow;}
+    public static boolean isRunning() { return running; }
     public static boolean isHasStarted() {
         return hasStarted;
     }

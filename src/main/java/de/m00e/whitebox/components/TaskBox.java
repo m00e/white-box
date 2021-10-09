@@ -64,23 +64,23 @@ public class TaskBox extends VBox {
         taskMap = new HashMap<>();
 
         addBtn = new Button("Add Task");
-        addBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black"));
+        addBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
         addBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
         clrBtn = new Button("Clear Tasks");
-        clrBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black"));
+        clrBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
         clrBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
         saveBtn = new Button("Save Tasks");
-        saveBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black"));
+        saveBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
         saveBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
         saveAsBtn = new Button("...");
-        saveAsBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black"));
+        saveAsBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
         saveAsBtn.setPrefHeight(BUTTON_HEIGHT);
 
         loadBtn = new Button("Load Tasks");
-        loadBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black"));
+        loadBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
         loadBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
         taskLabel = new Label("TASKS");

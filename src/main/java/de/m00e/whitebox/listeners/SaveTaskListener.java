@@ -12,7 +12,6 @@ import java.io.IOException;
 public class SaveTaskListener implements EventHandler<ActionEvent> {
 
     private FileChooser fc;
-    private FileChooser.ExtensionFilter extensionFilter;
     private File f;
 
     // Decides if the task list is saved into a new file despite a current working file existing.
@@ -22,7 +21,7 @@ public class SaveTaskListener implements EventHandler<ActionEvent> {
         this.saveIntoNew = saveIntoNew;
 
         fc = new FileChooser();
-        extensionFilter = new FileChooser.ExtensionFilter("TASKS files (*.tasks)", "*.tasks");
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("TASKS files (*.tasks)", "*.tasks");
 
     }
 

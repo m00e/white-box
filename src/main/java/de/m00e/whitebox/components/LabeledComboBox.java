@@ -11,7 +11,7 @@ public class LabeledComboBox extends BorderPane {
     public LabeledComboBox(String lblName, int minTime, int maxTime) {
         double PREF_WIDTH = 100;
         Label lbl = new Label(lblName);
-        lbl.setStyle(WhiteBoxMain.getDefaultButtonStyle("black"));
+        lbl.setStyle(WhiteBoxMain.getDefaultStyle("black"));
 
         comboBox = new ComboBox<>();
         for(int i = minTime; i <= maxTime; i+=5) {

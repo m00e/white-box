@@ -4,14 +4,13 @@ import de.m00e.whitebox.WhiteBoxMain;
 import de.m00e.whitebox.listeners.AbortListener;
 import de.m00e.whitebox.listeners.StartStopListener;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
+import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import org.controlsfx.control.ToggleSwitch;
 
@@ -31,7 +30,6 @@ public class PomodoroWindow {
     private static Button startBtn, abortBtn;
 
     private Stage timerStage;
-    private Scene timerScene;
     private GridPane timerPane;
     private ToggleSwitch toggleSwitch;
 
@@ -39,7 +37,7 @@ public class PomodoroWindow {
     private Timer timer;
     int second, minute;
     String ddSecond, ddMinute;
-    private DecimalFormat dFormat = new DecimalFormat("00");
+    private final DecimalFormat dFormat = new DecimalFormat("00");
 
     private int[] pomodoroTimes;
     private int phaseCount;
@@ -51,20 +49,16 @@ public class PomodoroWindow {
     //TODO: Close external window when main window is closed
     public PomodoroWindow() {
         timerText = new Text("--:--");
-        timerText.setTextAlignment(TextAlignment.CENTER);
         timerText.setFont(new Font("Arial", NODE_HEIGHT));
 
         statusLabel = new Label("Session - / -");
-        statusLabel.setAlignment(Pos.CENTER);
-        statusLabel.setFont(new Font("Arial", NODE_HEIGHT/4));
+        statusLabel.setFont(new Font("Arial", NODE_HEIGHT/5));
 
         startBtn = new Button("Stop");
-        startBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black", "#9fe97a"));
         startBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         startBtn.setOnAction(new StartStopListener());
 
         abortBtn = new Button("Abort");
-        abortBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black", "#9fe97a"));
         abortBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         abortBtn.setOnAction(new AbortListener());
 
@@ -73,20 +67,26 @@ public class PomodoroWindow {
         timerStage.setWidth(BUTTON_WIDTH+50);
         timerStage.setResizable(false);
         timerStage.setTitle("Pomodoro Timer");
-        timerStage.setOnCloseRequest(event -> timerStage.setIconified(true)); // TODO
+        timerStage.setOnCloseRequest(event -> PomodoroBox.abortTimer());
 
         timerPane = new GridPane();
-        timerScene = new Scene(timerPane);
+        Scene timerScene = new Scene(timerPane);
 
         toggleSwitch = new ToggleSwitch("Always Visible");
-        toggleSwitch.setStyle(WhiteBoxMain.getDefaultButtonStyle("black", "#9fe97a"));
+        toggleSwitch.setStyle(WhiteBoxMain.getDefaultStyle("black", "#9fe97a"));
         toggleSwitch.selectedProperty().addListener(((observable, oldValue, newValue) -> timerStage.setAlwaysOnTop(newValue)));
 
-        timerPane.add(timerText,0,0,2,1);
+        timerPane.add(timerText,0,0,3,1);
         timerPane.add(statusLabel,1,2,1,1);
         timerPane.add(toggleSwitch,2,2,1,1);
         timerPane.add(startBtn, 1,3,1,1);
         timerPane.add(abortBtn, 2,3,1,1);
+
+        GridPane.setHalignment(timerText, HPos.CENTER);
+        GridPane.setHalignment(statusLabel, HPos.CENTER);
+        GridPane.setHalignment(toggleSwitch, HPos.CENTER);
+        GridPane.setHalignment(startBtn, HPos.CENTER);
+        GridPane.setHalignment(abortBtn, HPos.CENTER);
 
         timerStage.setScene(timerScene);
         timerStage.show();
@@ -123,20 +123,18 @@ public class PomodoroWindow {
                 Platform.runLater(() -> timerText.setText(ddMinute + ":" + ddSecond));
 
                 if (minute == 0 && second == 0) {
+                    // Stop current timer and immediately start new timer
                     phaseCount++;
                     timer.cancel();
                     runTimer();
                 }
             }
-        }, 0L, 10L);
+        }, 0L, 1000L);
     }
 
     /**
      * Initialize pomodoro phases and phase count. One Pomodoro consists of
      * 1. session, small break, 2. session, small break, 3. session, small break, 4. session, long break.
-     * @param sessionTime
-     * @param smallBreak
-     * @param longBreak
      */
     public void initializePhases(int sessionTime, int smallBreak, int longBreak) {
         phaseCount = 0;
@@ -175,13 +173,13 @@ public class PomodoroWindow {
 
     /**
      * Set background colors for entire pane, buttons and toggle switch
-     * @param color
+     * @param color JavaFX color or HTML-color-code
      */
     private void setComponentColor(String color) {
         timerPane.setStyle("-fx-background-color: " + color + ";");
-        startBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black", color));
-        abortBtn.setStyle(WhiteBoxMain.getDefaultButtonStyle("black", color));
-        toggleSwitch.setStyle(WhiteBoxMain.getDefaultButtonStyle("black", color));
+        startBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
+        abortBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
+        toggleSwitch.setStyle(WhiteBoxMain.getDefaultStyle("black", color));
     }
 
     public void initializeTimer(int minutes) {
@@ -193,6 +191,10 @@ public class PomodoroWindow {
         return timerStage;
     }
 
+    /**
+     * Translates phase count into session nr.
+     * @return Session nr. (1,2,3,4)
+     */
     public int getSessionNumber() {
         if(phaseCount%2 == 0) {
             return phaseCount/2+1;
@@ -202,8 +204,8 @@ public class PomodoroWindow {
     }
 
     /**
-     * Translates current phase number into enum.
-     * @return
+     * Translates current phase number into PomodoroPhase-enum.
+     * @return PomodoroPhase enum
      */
     public PomodoroPhase getPhaseFromCount() {
         if(phaseCount%2 == 0) {
