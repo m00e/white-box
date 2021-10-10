@@ -46,7 +46,6 @@ public class PomodoroWindow {
     private final String SESSION_COLOR = "#9fe97a", SMALL_BREAK_COLOR = "#e9937a", LONG_BREAK_COLOR = "#8a4531";
 
     //TODO: Play sound when session or break has ended
-    //TODO: Close external window when main window is closed
     public PomodoroWindow() {
         timerText = new Text("--:--");
         timerText.setFont(new Font("Arial", NODE_HEIGHT));

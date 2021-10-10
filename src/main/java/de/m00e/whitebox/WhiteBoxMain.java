@@ -1,5 +1,6 @@
 package de.m00e.whitebox;
 
+import de.m00e.whitebox.components.InfoPane;
 import de.m00e.whitebox.components.ImagePane;
 import de.m00e.whitebox.components.PomodoroBox;
 import de.m00e.whitebox.components.TaskBox;
@@ -45,9 +46,12 @@ public class WhiteBoxMain extends Application {
         hBox.setSpacing(10);
         hBox.setPadding(new Insets(0,10,10,10));
 
+        InfoPane datePane = new InfoPane();
+
         // Add nodes to window and make it visible
         rootPane.setTop(imgPane);
         rootPane.setCenter(hBox);
+        rootPane.setBottom(datePane);
         Scene scene = new Scene(rootPane, WIDTH, screenSize.height);
 
         stage.setOnCloseRequest(event -> {
@@ -56,6 +60,7 @@ public class WhiteBoxMain extends Application {
                 PomodoroBox.getPomodoroWindow().getTimerStage().close();
             }
             stage.close();
+            System.exit(0);
         });
         stage.setScene(scene);
         stage.show();
@@ -82,6 +87,10 @@ public class WhiteBoxMain extends Application {
         return "-fx-text-fill: " + textColor + "; -fx-background-color: " + backgroundColor + "; -fx-font-size: 16px;";
     }
 
+    /**
+     * Credits: http://fxexperience.com/2011/12/styling-fx-buttons-with-css/
+     * @return Glass Grey Style
+     */
     public static String getGlassGreyStyle() {
         return "-fx-background-color: \n" +
                 "#c3c4c4,\n" +
