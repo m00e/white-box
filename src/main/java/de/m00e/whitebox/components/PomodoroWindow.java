@@ -56,10 +56,12 @@ public class PomodoroWindow {
         startBtn = new Button("Stop");
         startBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         startBtn.setOnAction(new StartStopListener());
+        startBtn.getStyleClass().add("button-glassgrey");
 
         abortBtn = new Button("Abort");
         abortBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         abortBtn.setOnAction(new AbortListener());
+        abortBtn.getStyleClass().add("button-glassgrey");
 
         timerStage = new Stage();
         timerStage.setHeight(HEIGHT/2);
@@ -70,6 +72,7 @@ public class PomodoroWindow {
 
         timerPane = new GridPane();
         Scene timerScene = new Scene(timerPane);
+        timerScene.getStylesheets().add("/css/component-styles.css");
 
         toggleSwitch = new ToggleSwitch("Always Visible");
         toggleSwitch.setStyle(WhiteBoxMain.getDefaultStyle("black", "#9fe97a"));
@@ -176,8 +179,6 @@ public class PomodoroWindow {
      */
     private void setComponentColor(String color) {
         timerPane.setStyle("-fx-background-color: " + color + ";");
-        startBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
-        abortBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
         toggleSwitch.setStyle(WhiteBoxMain.getDefaultStyle("black", color));
     }
 

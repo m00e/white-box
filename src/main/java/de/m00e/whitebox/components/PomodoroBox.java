@@ -38,7 +38,7 @@ public class PomodoroBox extends VBox {
     }
 
     private void setupComponents() {
-        pomodoroLabel = new Label("POMODORO");
+        pomodoroLabel = new Label("{POMODORO}");
         pomodoroLabel.setPrefHeight(NODE_HEIGHT);
         pomodoroLabel.setPrefWidth(WIDTH-20);
         pomodoroLabel.setAlignment(Pos.CENTER);
@@ -53,12 +53,12 @@ public class PomodoroBox extends VBox {
         longBreakTimeBox = new LabeledComboBox("Long Breaks:", 15,60);
 
         startBtn = new Button("Start");
-        startBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
+        startBtn.getStyleClass().add("button-glassgrey");
         startBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         startBtn.setOnAction(new StartStopListener());
 
         abortBtn = new Button("Abort");
-        abortBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
+        abortBtn.getStyleClass().add("button-glassgrey");
         abortBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         abortBtn.setDisable(true); // Abort button shouldn't be usable if timer hasn't started yet.
         abortBtn.setOnAction(new AbortListener());

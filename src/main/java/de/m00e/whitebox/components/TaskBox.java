@@ -64,26 +64,26 @@ public class TaskBox extends VBox {
         taskMap = new HashMap<>();
 
         addBtn = new Button("Add Task");
-        addBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
+        addBtn.getStyleClass().add("button-glassgrey");
         addBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
         clrBtn = new Button("Clear Tasks");
-        clrBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
+        clrBtn.getStyleClass().add("button-glassgrey");
         clrBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
         saveBtn = new Button("Save Tasks");
-        saveBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
+        saveBtn.getStyleClass().add("button-glassgrey");
         saveBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
         saveAsBtn = new Button("...");
-        saveAsBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
+        saveAsBtn.getStyleClass().add("button-glassgrey");
         saveAsBtn.setPrefHeight(BUTTON_HEIGHT);
 
         loadBtn = new Button("Load Tasks");
-        loadBtn.setStyle(WhiteBoxMain.getGlassGreyStyle());
+        loadBtn.getStyleClass().add("button-glassgrey");
         loadBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
-        taskLabel = new Label("TASKS");
+        taskLabel = new Label("{TASKS}");
         taskLabel.setPrefHeight(NODE_HEIGHT);
         taskLabel.setPrefWidth(WIDTH-20);
         taskLabel.setAlignment(Pos.CENTER);

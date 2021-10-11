@@ -19,6 +19,7 @@ public class LabeledComboBox extends BorderPane {
         }
         comboBox.getSelectionModel().selectFirst();
         comboBox.setPrefWidth(PREF_WIDTH);
+        comboBox.getStyleClass().add("combobox");
 
         this.setCenter(lbl);
         this.setRight(comboBox);
