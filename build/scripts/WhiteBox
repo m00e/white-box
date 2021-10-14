@@ -80,8 +80,8 @@ case "`uname`" in
     ;;
 esac
 
-CLASSPATH=$APP_HOME/lib/WhiteBox-1.0-SNAPSHOT.jar:$APP_HOME/lib/validatorfx-0.1.13.jar
-MODULE_PATH=$APP_HOME/lib/javafx-web-15.0.1-mac.jar:$APP_HOME/lib/javafx-fxml-15.0.1-mac.jar:$APP_HOME/lib/javafx-controls-15.0.1-mac.jar:$APP_HOME/lib/javafx-controls-15.0.1.jar:$APP_HOME/lib/javafx-media-15.0.1-mac.jar:$APP_HOME/lib/javafx-media-15.0.1.jar:$APP_HOME/lib/javafx-graphics-15.0.1-mac.jar:$APP_HOME/lib/javafx-graphics-15.0.1.jar:$APP_HOME/lib/javafx-base-15.0.1-mac.jar:$APP_HOME/lib/javafx-base-15.0.1.jar:$APP_HOME/lib/controlsfx-11.1.0.jar:$APP_HOME/lib/formsfx-core-11.3.2.jar:$APP_HOME/lib/ikonli-javafx-12.2.0.jar:$APP_HOME/lib/bootstrapfx-core-0.4.0.jar:$APP_HOME/lib/tilesfx-11.48.jar:$APP_HOME/lib/ikonli-core-12.2.0.jar
+CLASSPATH=$APP_HOME/lib/WhiteBox-1.0.jar:$APP_HOME/lib/validatorfx-0.1.13.jar
+MODULE_PATH=$APP_HOME/lib/javafx-fxml-15.0.1-mac.jar:$APP_HOME/lib/javafx-web-15.0.1-mac.jar:$APP_HOME/lib/javafx-controls-15.0.1-mac.jar:$APP_HOME/lib/javafx-controls-15.0.1.jar:$APP_HOME/lib/javafx-media-15.0.1-mac.jar:$APP_HOME/lib/javafx-media-15.0.1.jar:$APP_HOME/lib/javafx-graphics-15.0.1-mac.jar:$APP_HOME/lib/javafx-graphics-15.0.1.jar:$APP_HOME/lib/javafx-base-15.0.1-mac.jar:$APP_HOME/lib/javafx-base-15.0.1.jar:$APP_HOME/lib/controlsfx-11.1.0.jar:$APP_HOME/lib/formsfx-core-11.3.2.jar:$APP_HOME/lib/ikonli-javafx-12.2.0.jar:$APP_HOME/lib/bootstrapfx-core-0.4.0.jar:$APP_HOME/lib/tilesfx-11.48.jar:$APP_HOME/lib/ikonli-core-12.2.0.jar
 
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then

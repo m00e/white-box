@@ -67,8 +67,8 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\WhiteBox-1.0-SNAPSHOT.jar;%APP_HOME%\lib\validatorfx-0.1.13.jar
-set MODULE_PATH=%APP_HOME%\lib\javafx-web-15.0.1-mac.jar;%APP_HOME%\lib\javafx-fxml-15.0.1-mac.jar;%APP_HOME%\lib\javafx-controls-15.0.1-mac.jar;%APP_HOME%\lib\javafx-controls-15.0.1.jar;%APP_HOME%\lib\javafx-media-15.0.1-mac.jar;%APP_HOME%\lib\javafx-media-15.0.1.jar;%APP_HOME%\lib\javafx-graphics-15.0.1-mac.jar;%APP_HOME%\lib\javafx-graphics-15.0.1.jar;%APP_HOME%\lib\javafx-base-15.0.1-mac.jar;%APP_HOME%\lib\javafx-base-15.0.1.jar;%APP_HOME%\lib\controlsfx-11.1.0.jar;%APP_HOME%\lib\formsfx-core-11.3.2.jar;%APP_HOME%\lib\ikonli-javafx-12.2.0.jar;%APP_HOME%\lib\bootstrapfx-core-0.4.0.jar;%APP_HOME%\lib\tilesfx-11.48.jar;%APP_HOME%\lib\ikonli-core-12.2.0.jar
+set CLASSPATH=%APP_HOME%\lib\WhiteBox-1.0.jar;%APP_HOME%\lib\validatorfx-0.1.13.jar
+set MODULE_PATH=%APP_HOME%\lib\javafx-fxml-15.0.1-mac.jar;%APP_HOME%\lib\javafx-web-15.0.1-mac.jar;%APP_HOME%\lib\javafx-controls-15.0.1-mac.jar;%APP_HOME%\lib\javafx-controls-15.0.1.jar;%APP_HOME%\lib\javafx-media-15.0.1-mac.jar;%APP_HOME%\lib\javafx-media-15.0.1.jar;%APP_HOME%\lib\javafx-graphics-15.0.1-mac.jar;%APP_HOME%\lib\javafx-graphics-15.0.1.jar;%APP_HOME%\lib\javafx-base-15.0.1-mac.jar;%APP_HOME%\lib\javafx-base-15.0.1.jar;%APP_HOME%\lib\controlsfx-11.1.0.jar;%APP_HOME%\lib\formsfx-core-11.3.2.jar;%APP_HOME%\lib\ikonli-javafx-12.2.0.jar;%APP_HOME%\lib\bootstrapfx-core-0.4.0.jar;%APP_HOME%\lib\tilesfx-11.48.jar;%APP_HOME%\lib\ikonli-core-12.2.0.jar
 
 @rem Execute WhiteBox
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %WHITE_BOX_OPTS%  -classpath "%CLASSPATH%" --module-path "%MODULE_PATH%" --module de.m00e.whitebox.whitebox/de.m00e.whitebox.WhiteBoxMain %*

@@ -10,9 +10,16 @@ public class ImagePane extends BorderPane {
     private Image image;
 
     public ImagePane(String path) {
-        image = new Image(this.getClass().getClassLoader().getResourceAsStream(path));
-        //image = new Image(WhiteBoxMain.class.getResourceAsStream(path));
-        imageView = new ImageView(image);
-        this.setCenter(imageView);
+
+        try {
+            image = new Image(getClass().getResourceAsStream(path));
+            //image = new Image(WhiteBoxMain.class.getResourceAsStream(path));
+            imageView = new ImageView(image);
+            this.setCenter(imageView);
+        } catch(NullPointerException exc) {
+            System.out.println(getClass().getResource("/icons/whitebox_icon.png"));
+            this.setCenter(null);
+        }
+
     }
 }

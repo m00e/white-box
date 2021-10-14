@@ -33,7 +33,7 @@ public class WhiteBoxApp extends Application {
         stage.setWidth(WIDTH);
         stage.setHeight(screenSize.getHeight()*0.75);
 
-        ImagePane imgPane = new ImagePane("/main/resources/icons/whitebox_icon.png"); // Load main icon
+        ImagePane imgPane = new ImagePane("/icons/whitebox_icon.png"); // Load main icon
         imgPane.setMaxWidth(WIDTH);
         imgPane.setMaxHeight(125);
 
