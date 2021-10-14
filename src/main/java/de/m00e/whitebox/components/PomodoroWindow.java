@@ -1,6 +1,6 @@
 package de.m00e.whitebox.components;
 
-import de.m00e.whitebox.WhiteBoxMain;
+import de.m00e.whitebox.WhiteBoxApp;
 import de.m00e.whitebox.listeners.AbortListener;
 import de.m00e.whitebox.listeners.StartStopListener;
 import javafx.application.Platform;
@@ -20,9 +20,9 @@ import java.util.TimerTask;
 
 public class PomodoroWindow {
 
-    private final static double NODE_HEIGHT = WhiteBoxMain.getNodeHeight()+50;
-    private final static double BUTTON_WIDTH = WhiteBoxMain.getButtonWidth();
-    private final static double BUTTON_HEIGHT =  WhiteBoxMain.getButtonHeight();
+    private final static double NODE_HEIGHT = WhiteBoxApp.getNodeHeight()+50;
+    private final static double BUTTON_WIDTH = WhiteBoxApp.getButtonWidth();
+    private final static double BUTTON_HEIGHT =  WhiteBoxApp.getButtonHeight();
     private final static double HEIGHT = 400; // Height of the whole timer pane
 
     private Text timerText;
@@ -75,8 +75,9 @@ public class PomodoroWindow {
         timerScene.getStylesheets().add("/css/component-styles.css");
 
         toggleSwitch = new ToggleSwitch("Always Visible");
-        toggleSwitch.setStyle(WhiteBoxMain.getDefaultStyle("black", "#9fe97a"));
-        toggleSwitch.selectedProperty().addListener(((observable, oldValue, newValue) -> timerStage.setAlwaysOnTop(newValue)));
+        toggleSwitch.setStyle(WhiteBoxApp.getDefaultStyle("black", "#9fe97a"));
+        toggleSwitch.selectedProperty().addListener((
+                (observable, oldValue, newValue) -> timerStage.setAlwaysOnTop(newValue)));
 
         timerPane.add(timerText,0,0,3,1);
         timerPane.add(statusLabel,1,2,1,1);
@@ -179,7 +180,7 @@ public class PomodoroWindow {
      */
     private void setComponentColor(String color) {
         timerPane.setStyle("-fx-background-color: " + color + ";");
-        toggleSwitch.setStyle(WhiteBoxMain.getDefaultStyle("black", color));
+        toggleSwitch.setStyle(WhiteBoxApp.getDefaultStyle("black", color));
     }
 
     public void initializeTimer(int minutes) {

@@ -1,7 +1,6 @@
 package de.m00e.whitebox.components;
 
-import de.m00e.whitebox.WhiteBoxMain;
-import javafx.application.Platform;
+import de.m00e.whitebox.WhiteBoxApp;
 import javafx.geometry.HPos;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
@@ -22,7 +21,7 @@ import java.util.TimerTask;
 
 public class InfoPane extends FlowPane {
 
-    private final static double NODE_HEIGHT = WhiteBoxMain.getNodeHeight()/3;
+    private final static double NODE_HEIGHT = WhiteBoxApp.getNodeHeight()/3;
 
     private Text dateText, connectionState;
     private Timer timer;

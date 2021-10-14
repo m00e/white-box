@@ -1,6 +1,6 @@
 package de.m00e.whitebox.components;
 
-import de.m00e.whitebox.WhiteBoxMain;
+import de.m00e.whitebox.WhiteBoxApp;
 import de.m00e.whitebox.listeners.AbortListener;
 import de.m00e.whitebox.listeners.StartStopListener;
 import javafx.geometry.Insets;
@@ -13,10 +13,10 @@ import javafx.scene.text.Font;
 
 public class PomodoroBox extends VBox {
 
-    private final double WIDTH = WhiteBoxMain.getWidth();
-    private final double NODE_HEIGHT = WhiteBoxMain.getNodeHeight();
-    private final double BUTTON_WIDTH = WhiteBoxMain.getButtonWidth();
-    private final double BUTTON_HEIGHT = WhiteBoxMain.getButtonHeight();
+    private final double WIDTH = WhiteBoxApp.getWidth();
+    private final double NODE_HEIGHT = WhiteBoxApp.getNodeHeight();
+    private final double BUTTON_WIDTH = WhiteBoxApp.getButtonWidth();
+    private final double BUTTON_HEIGHT = WhiteBoxApp.getButtonHeight();
 
     private static Button startBtn, abortBtn; //Start button is also stop button
     private static Label pomodoroLabel, infoLabel;

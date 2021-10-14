@@ -1,6 +1,6 @@
 package de.m00e.whitebox.components;
 
-import de.m00e.whitebox.WhiteBoxMain;
+import de.m00e.whitebox.WhiteBoxApp;
 import de.m00e.whitebox.listeners.LoadTaskListener;
 import de.m00e.whitebox.listeners.SaveTaskListener;
 import javafx.geometry.Insets;
@@ -21,10 +21,10 @@ public class TaskBox extends VBox {
 
     private static File currFile; // Remember the file the user is working on.
 
-    private final double WIDTH = WhiteBoxMain.getWidth();
-    private final double NODE_HEIGHT = WhiteBoxMain.getNodeHeight();
-    private final double BUTTON_WIDTH = WhiteBoxMain.getButtonWidth();
-    private final double BUTTON_HEIGHT = WhiteBoxMain.getButtonHeight()-20;
+    private final double WIDTH = WhiteBoxApp.getWidth();
+    private final double NODE_HEIGHT = WhiteBoxApp.getNodeHeight();
+    private final double BUTTON_WIDTH = WhiteBoxApp.getButtonWidth();
+    private final double BUTTON_HEIGHT = WhiteBoxApp.getButtonHeight()-20;
 
     private Button addBtn, clrBtn, saveBtn, saveAsBtn, loadBtn;
     private static Label taskLabel, currFileLabel;

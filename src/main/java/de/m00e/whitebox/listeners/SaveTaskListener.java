@@ -29,9 +29,9 @@ public class SaveTaskListener implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         try {
             /* First look if there is already a file the user works on.
-             If there is one, save it in there. */
-            // BUG: If such a file exists, then it is not possible (in the same session) to save to tasks into another file
-            //TODO: Solve with Clear Button??
+             If there is one, save it in there. If 'save-as' button is pressed, change in new file regardless. */
+            // 'BUG': If such a file exists, then it is not possible (in the same session) to save to tasks into another file
+            // -> TODO: Solve with Clear Button??
             if(saveIntoNew || TaskBox.getRecentFile() == null) {
                 f = fc.showSaveDialog(((Node) event.getTarget()).getScene().getWindow());
                 if(f == null) return;

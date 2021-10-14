@@ -56,6 +56,6 @@ test {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'de.m00e.whitebox.WhiteBoxMain'
+        attributes 'Main-Class' : 'de.m00e.whitebox.WhiteBoxMain'
     }
 }

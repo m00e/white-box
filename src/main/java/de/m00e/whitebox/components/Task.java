@@ -1,6 +1,6 @@
 package de.m00e.whitebox.components;
 
-import de.m00e.whitebox.WhiteBoxMain;
+import de.m00e.whitebox.WhiteBoxApp;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -80,12 +80,12 @@ public class Task extends BorderPane {
      */
     private void endTask(boolean success) {
         if(success) {
-            textField.setStyle("-fx-text-fill: green; -fx-font-size: 16px;");
-            taskNrLbl.setStyle("-fx-text-fill: green; -fx-font-size: 16px;");
+            textField.setStyle(WhiteBoxApp.getDefaultStyle("green"));
+            taskNrLbl.setStyle(WhiteBoxApp.getDefaultStyle("green"));
             status = Status.DONE;
         } else {
-            textField.setStyle("-fx-text-fill: red; -fx-font-size: 16px;");
-            taskNrLbl.setStyle("-fx-text-fill: red; -fx-font-size: 16px;");
+            textField.setStyle(WhiteBoxApp.getDefaultStyle("red"));
+            taskNrLbl.setStyle(WhiteBoxApp.getDefaultStyle("red"));
             status = Status.ABORTED;
         }
 
@@ -103,11 +103,11 @@ public class Task extends BorderPane {
         flowPane.setPadding(new Insets(0,5,0,5));
 
         taskNrLbl = new Label("Task #" + taskNr);
-        taskNrLbl.setStyle(WhiteBoxMain.getDefaultStyle("black", "white"));
+        taskNrLbl.setStyle(WhiteBoxApp.getDefaultStyle("black", "white"));
 
-        editIcon = new ImagePane("/edit_icon.png");
-        abortIcon = new ImagePane("/abort_icon.png");
-        delIcon = new ImagePane("/delete_icon.png");
+        editIcon = new ImagePane("/icons/edit_icon.png");
+        abortIcon = new ImagePane("/icons/abort_icon.png");
+        delIcon = new ImagePane("/icons/delete_icon.png");
 
         checkBox = new CheckBox();
 
@@ -121,8 +121,8 @@ public class Task extends BorderPane {
         delBtn.setGraphic(delIcon);
 
         textField = new TextField();
-        textField.setStyle("-fx-text-fill: black; -fx-font-size: 16px;");
-        textField.setMaxWidth(WhiteBoxMain.getWidth());
+        textField.setStyle(WhiteBoxApp.getDefaultStyle("black"));
+        textField.setMaxWidth(WhiteBoxApp.getWidth());
     }
 
     private void addListeners() {
@@ -164,7 +164,6 @@ public class Task extends BorderPane {
 
     @Override
     public String toString() {
-        // TODO: Maybe refactor ???
         return taskNr + ";" + status + ";" + textField.getText();
     }
 
