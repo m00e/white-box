@@ -3,6 +3,7 @@ package de.m00e.whitebox.components;
 import de.m00e.whitebox.WhiteBoxApp;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 
 public class LabeledComboBox extends BorderPane {
 
@@ -12,6 +13,7 @@ public class LabeledComboBox extends BorderPane {
         double PREF_WIDTH = 100;
         Label lbl = new Label(lblName);
         lbl.setStyle(WhiteBoxApp.getDefaultStyle("black"));
+        lbl.setFont(new Font("Arial", 16));
 
         comboBox = new ComboBox<>();
         for(int i = minTime; i <= maxTime; i+=5) {

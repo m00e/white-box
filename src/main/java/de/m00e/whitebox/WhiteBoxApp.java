@@ -6,6 +6,7 @@ import de.m00e.whitebox.components.PomodoroBox;
 import de.m00e.whitebox.components.TaskBox;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
@@ -15,6 +16,8 @@ import javafx.stage.Stage;
 import java.awt.*;
 
 public class WhiteBoxApp extends Application {
+
+    public static final String VERSION = "1.0";
 
     private static final double WIDTH = 850;
     private static final double NODE_HEIGHT = 50;
@@ -28,7 +31,7 @@ public class WhiteBoxApp extends Application {
 
     @Override
     public void start(Stage stage) {
-        stage.setTitle("White Box");
+        stage.setTitle("WhiteBox");
         stage.setResizable(false);
         stage.setWidth(WIDTH);
         stage.setHeight(screenSize.getHeight()*0.75);
@@ -42,7 +45,10 @@ public class WhiteBoxApp extends Application {
         PomodoroBox pomodoroBox = new PomodoroBox();
         TaskBox taskBox = new TaskBox();
 
-        hBox.getChildren().addAll(pomodoroBox, new Separator(), taskBox);
+        Separator separator = new Separator();
+        separator.setOrientation(Orientation.VERTICAL);
+
+        hBox.getChildren().addAll(pomodoroBox, separator, taskBox);
         hBox.setSpacing(10);
         hBox.setPadding(new Insets(0,10,10,10));
 

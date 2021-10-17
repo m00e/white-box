@@ -23,13 +23,13 @@ public class InfoPane extends FlowPane {
 
     private final static double NODE_HEIGHT = WhiteBoxApp.getNodeHeight()/3;
 
-    private Text dateText, connectionState;
+    private Text dateText, connectionState, versionText;
     private Timer timer;
 
     private SimpleDateFormat format;
     private Date date;
 
-    private Separator hSeparator;
+    private Separator[] separators;
 
     private Socket sock;
     private InetSocketAddress addr = new InetSocketAddress("www.google.com", 80);
@@ -39,16 +39,22 @@ public class InfoPane extends FlowPane {
         dateText.setFont(new Font("Arial", NODE_HEIGHT));
         connectionState = new Text();
         connectionState.setFont(new Font("Arial", NODE_HEIGHT));
+        versionText = new Text("WhiteBox v" + WhiteBoxApp.VERSION + " developed by m00e");
+        versionText.setFont(new Font("Arial", NODE_HEIGHT));
 
         timer = new Timer();
         format = new SimpleDateFormat("dd/MM/yyyy"+" "+"HH:mm");
 
-        hSeparator = new Separator();
-        hSeparator.setOrientation(Orientation.VERTICAL);
+        separators = new Separator[2];
+        separators[0] = new Separator();
+        separators[1] = new Separator();
+        separators[0].setOrientation(Orientation.VERTICAL);
+        separators[1].setOrientation(Orientation.VERTICAL);
 
-        getChildren().addAll(dateText, hSeparator, connectionState);
+        getChildren().addAll(versionText, separators[0], dateText, separators[1], connectionState);
         GridPane.setHalignment(dateText, HPos.CENTER);
         GridPane.setHalignment(connectionState, HPos.CENTER);
+        GridPane.setHalignment(versionText, HPos.CENTER);
 
         setHgap(5);
         runTasks();

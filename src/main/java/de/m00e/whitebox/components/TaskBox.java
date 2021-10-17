@@ -83,7 +83,7 @@ public class TaskBox extends VBox {
         loadBtn.getStyleClass().add("button-glassgrey");
         loadBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
-        taskLabel = new Label("{TASKS}");
+        taskLabel = new Label("TASKS");
         taskLabel.setPrefHeight(NODE_HEIGHT);
         taskLabel.setPrefWidth(WIDTH-20);
         taskLabel.setAlignment(Pos.CENTER);

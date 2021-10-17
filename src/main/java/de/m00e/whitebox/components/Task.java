@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.text.Font;
 
 public class Task extends BorderPane {
 
@@ -103,7 +104,8 @@ public class Task extends BorderPane {
         flowPane.setPadding(new Insets(0,5,0,5));
 
         taskNrLbl = new Label("Task #" + taskNr);
-        taskNrLbl.setStyle(WhiteBoxApp.getDefaultStyle("black", "white"));
+        taskNrLbl.setFont(new Font("Arial", 16));
+        taskNrLbl.setStyle(WhiteBoxApp.getDefaultStyle("black"));
 
         editIcon = new ImagePane("/icons/edit_icon.png");
         abortIcon = new ImagePane("/icons/abort_icon.png");
