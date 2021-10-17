@@ -4,7 +4,6 @@ import de.m00e.whitebox.WhiteBoxApp;
 import de.m00e.whitebox.listeners.LoadTaskListener;
 import de.m00e.whitebox.listeners.SaveTaskListener;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -12,7 +11,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 
 import java.io.*;
 import java.util.HashMap;
@@ -21,15 +19,14 @@ public class TaskBox extends VBox {
 
     private static File currFile; // Remember the file the user is working on.
 
-    private final double WIDTH = WhiteBoxApp.getWidth();
-    private final double NODE_HEIGHT = WhiteBoxApp.getNodeHeight();
     private final double BUTTON_WIDTH = WhiteBoxApp.getButtonWidth();
     private final double BUTTON_HEIGHT = WhiteBoxApp.getButtonHeight()-20;
 
     private Button addBtn, clrBtn, saveBtn, saveAsBtn, loadBtn;
-    private static Label taskLabel, currFileLabel;
+    private static Label currFileLabel;
     private ScrollPane sp;
     private static VBox taskListBox;
+    private static ImagePane imgPane;
 
     private static HashMap<Integer, Task> taskMap;
     private static int taskCounter = 1;
@@ -48,7 +45,7 @@ public class TaskBox extends VBox {
 
         saveBtnPane.setCenter(saveBtn);
         saveBtnPane.setRight(saveAsBtn);
-        getChildren().addAll(taskLabel, btnPane, currFileLabel, new Separator(), sp);
+        getChildren().addAll(imgPane, btnPane, currFileLabel, new Separator(), sp);
         setSpacing(10);
         setPadding(new Insets(0,10,10,10));
     }
@@ -83,11 +80,7 @@ public class TaskBox extends VBox {
         loadBtn.getStyleClass().add("button-glassgrey");
         loadBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
-        taskLabel = new Label("TASKS");
-        taskLabel.setPrefHeight(NODE_HEIGHT);
-        taskLabel.setPrefWidth(WIDTH-20);
-        taskLabel.setAlignment(Pos.CENTER);
-        taskLabel.setFont(new Font("Arial", NODE_HEIGHT));
+        imgPane = new ImagePane("/icons/tasks_icon.png"); // Load main icon
 
         currFileLabel = new Label();
 

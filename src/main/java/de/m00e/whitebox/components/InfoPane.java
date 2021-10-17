@@ -43,7 +43,7 @@ public class InfoPane extends FlowPane {
         versionText.setFont(new Font("Arial", NODE_HEIGHT));
 
         timer = new Timer();
-        format = new SimpleDateFormat("dd/MM/yyyy"+" "+"HH:mm");
+        format = new SimpleDateFormat("dd.MM.yyyy"+" "+"HH:mm");
 
         separators = new Separator[2];
         separators[0] = new Separator();
