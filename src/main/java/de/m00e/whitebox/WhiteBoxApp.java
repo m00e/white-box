@@ -1,9 +1,6 @@
 package de.m00e.whitebox;
 
-import de.m00e.whitebox.components.InfoPane;
-import de.m00e.whitebox.components.ImagePane;
-import de.m00e.whitebox.components.PomodoroBox;
-import de.m00e.whitebox.components.TaskBox;
+import de.m00e.whitebox.components.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -11,13 +8,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.awt.*;
 
 public class WhiteBoxApp extends Application {
 
-    public static final String VERSION = "1.0";
+    private static final String AUTHOR_VERSION = " (v" + 1.0 + " developed by m00e)";
 
     private static final double WIDTH = 850;
     private static final double NODE_HEIGHT = 50;
@@ -31,17 +29,14 @@ public class WhiteBoxApp extends Application {
 
     @Override
     public void start(Stage stage) {
-        stage.setTitle("WhiteBox");
+        stage.setTitle("WhiteBox" + AUTHOR_VERSION);
         stage.setResizable(false);
         stage.setWidth(WIDTH);
         stage.setHeight(screenSize.getHeight()*0.75);
 
-        ImagePane imgPane = new ImagePane("/icons/whitebox_icon.png"); // Load main icon
-        imgPane.setMaxWidth(WIDTH);
-        imgPane.setMaxHeight(125);
-
         BorderPane rootPane = new BorderPane();
         HBox hBox = new HBox();
+        ImagePane imgPane = new ImagePane("/icons/whitebox_icon.png"); // Load main icon
         PomodoroBox pomodoroBox = new PomodoroBox();
         TaskBox taskBox = new TaskBox();
 

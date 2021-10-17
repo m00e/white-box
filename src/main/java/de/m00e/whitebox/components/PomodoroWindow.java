@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -42,10 +43,6 @@ public class PomodoroWindow {
     private int[] pomodoroTimes;
     private int phaseCount;
 
-    //HTML-codes for pomodoro background colors
-    private final String SESSION_COLOR = "#9fe97a", SMALL_BREAK_COLOR = "#e9937a", LONG_BREAK_COLOR = "#8a4531";
-
-    //TODO: Play sound when session or break has ended
     public PomodoroWindow() {
         timerText = new Text("--:--");
         timerText.setFont(new Font("Arial", NODE_HEIGHT));
@@ -129,10 +126,11 @@ public class PomodoroWindow {
                     // Stop current timer and immediately start new timer
                     phaseCount++;
                     timer.cancel();
+                    playAlarmSound();
                     runTimer();
                 }
             }
-        }, 0L, 1000L);
+        }, 0L, 10L);
     }
 
     /**
@@ -153,22 +151,35 @@ public class PomodoroWindow {
     }
 
     /**
+     * Alarm sound that is played whenever timer is done.
+     */
+    private void playAlarmSound() {
+        //TODO: This
+        AudioClip alarm = new AudioClip(getClass().getResource("/audio/pomodoro_alarm.wav").toString());
+        alarm.play();
+    }
+
+    /**
      * Sets status label and background color according to the current pomodoro phase.
      */
     public void setStatus() {
         switch(getPhaseFromCount()) {
             case SESSION -> {
                 Platform.runLater(() -> statusLabel.setText("Session: " + getSessionNumber() + " / 4"));
+                //HTML-codes for pomodoro background colors
+                String SESSION_COLOR = "#9fe97a";
                 setComponentColor(SESSION_COLOR);
             }
 
             case SMALL_BREAK -> {
                 Platform.runLater(() -> statusLabel.setText("Small break"));
+                String SMALL_BREAK_COLOR = "#e9937a";
                 setComponentColor(SMALL_BREAK_COLOR);
             }
 
             case LONG_BREAK -> {
                 Platform.runLater(() -> statusLabel.setText("Long break"));
+                String LONG_BREAK_COLOR = "#8a4531";
                 setComponentColor(LONG_BREAK_COLOR);
             }
         }

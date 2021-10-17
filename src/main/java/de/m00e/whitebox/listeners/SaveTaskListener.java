@@ -21,8 +21,7 @@ public class SaveTaskListener implements EventHandler<ActionEvent> {
         this.saveIntoNew = saveIntoNew;
 
         fc = new FileChooser();
-        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("TASKS files (*.tasks)", "*.tasks");
-
+        new FileChooser.ExtensionFilter("TASKS files (*.tasks)", "*.tasks");
     }
 
     @Override

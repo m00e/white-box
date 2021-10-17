@@ -1,16 +1,12 @@
 package de.m00e.whitebox.components;
 
 import de.m00e.whitebox.WhiteBoxApp;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Font;
@@ -21,8 +17,6 @@ public class Task extends BorderPane {
     private CheckBox checkBox;
     private Button editBtn, abortBtn, delBtn;
     private TextField textField;
-
-    private ImagePane editIcon, abortIcon, delIcon;
 
     private FlowPane flowPane; // Main menu of each task
 
@@ -41,7 +35,12 @@ public class Task extends BorderPane {
         setCenter(textField);
     }
 
-    public Task(String info[]) {
+    /**
+     * Alternative constructor that is called if tasks are being loaded into @see {@link de.m00e.whitebox.components.TaskBox}.
+     * @param info String array containing task number, @see {@link de.m00e.whitebox.components.Task.Status}
+     *             and actual task string.
+     */
+    public Task(String[] info) {
         this.taskNr = Integer.parseInt(info[0]);
         this.status = Status.valueOf(info[1]);
 
@@ -54,19 +53,17 @@ public class Task extends BorderPane {
             textField.setText("");
 
         // Done or aborted tasks must be marked as end immediately, otherwise they are still considered running
-        switch(status) {
-            case DONE:
+        switch (status) {
+            case DONE -> {
                 checkBox.setSelected(true);
                 endTask(true);
-                break;
-            case ABORTED:
-                endTask(false);
-                break;
-            case RUNNING:
+            }
+            case ABORTED -> endTask(false);
+            case RUNNING -> {
                 // Task text field should be disabled and uneditable nonetheless.
                 textField.setDisable(true);
                 textField.setEditable(false);
-                break;
+            }
         }
 
         flowPane.getChildren().addAll(checkBox, taskNrLbl, editBtn, abortBtn, delBtn);
@@ -77,7 +74,7 @@ public class Task extends BorderPane {
     /**
      * Marks a task as completed successfully or aborted depending on the parameter.
      * It's not possible to check, edit, abort or delete finished tasks.
-     * @param success
+     * @param success Was the task completed (=true) or aborted (=false)
      */
     private void endTask(boolean success) {
         if(success) {
@@ -107,9 +104,9 @@ public class Task extends BorderPane {
         taskNrLbl.setFont(new Font("Arial", 16));
         taskNrLbl.setStyle(WhiteBoxApp.getDefaultStyle("black"));
 
-        editIcon = new ImagePane("/icons/edit_icon.png");
-        abortIcon = new ImagePane("/icons/abort_icon.png");
-        delIcon = new ImagePane("/icons/delete_icon.png");
+        ImagePane editIcon = new ImagePane("/icons/edit_icon.png");
+        ImagePane abortIcon = new ImagePane("/icons/abort_icon.png");
+        ImagePane delIcon = new ImagePane("/icons/delete_icon.png");
 
         checkBox = new CheckBox();
 
@@ -129,12 +126,9 @@ public class Task extends BorderPane {
 
     private void addListeners() {
         // If checkBox is checked, mark the task as done.
-        checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if(newValue) {
-                    endTask(true);
-                }
+        checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue) {
+                endTask(true);
             }
         });
 
@@ -153,13 +147,10 @@ public class Task extends BorderPane {
         delBtn.setOnAction(event -> TaskBox.removeTask(taskNr));
 
         // If enter key is pressed, make it impossible to edit textfield
-        textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if(event.getCode().equals(KeyCode.ENTER)) {
-                    textField.setEditable(false);
-                    textField.setDisable(true);
-                }
+        textField.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.ENTER)) {
+                textField.setEditable(false);
+                textField.setDisable(true);
             }
         });
     }
@@ -172,6 +163,6 @@ public class Task extends BorderPane {
     public enum Status {
         DONE,
         ABORTED,
-        RUNNING;
+        RUNNING
     }
 }
