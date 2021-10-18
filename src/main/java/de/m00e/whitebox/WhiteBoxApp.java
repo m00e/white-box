@@ -8,14 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.awt.*;
 
 public class WhiteBoxApp extends Application {
 
-    private static final String AUTHOR_VERSION = " (v" + 1.0 + " developed by m00e)";
+    private static final String AUTHOR_VERSION = " (v" + 1.1 + " developed by m00e)";
 
     private static final double WIDTH = 850;
     private static final double NODE_HEIGHT = 50;

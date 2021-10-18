@@ -9,12 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.media.AudioClip;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.controlsfx.control.ToggleSwitch;
 
+import javax.sound.sampled.*;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,6 +43,9 @@ public class PomodoroWindow {
 
     private int[] pomodoroTimes;
     private int phaseCount;
+
+    private AudioInputStream audioStream;
+    private Clip audioClip;
 
     public PomodoroWindow() {
         timerText = new Text("--:--");
@@ -85,11 +89,11 @@ public class PomodoroWindow {
         GridPane.setHalignment(timerText, HPos.CENTER);
         GridPane.setHalignment(statusLabel, HPos.CENTER);
         GridPane.setHalignment(toggleSwitch, HPos.CENTER);
-        GridPane.setHalignment(startBtn, HPos.CENTER);
-        GridPane.setHalignment(abortBtn, HPos.CENTER);
 
         timerStage.setScene(timerScene);
         timerStage.show();
+
+        initializeAudio();
     }
 
     /**
@@ -130,7 +134,7 @@ public class PomodoroWindow {
                     runTimer();
                 }
             }
-        }, 0L, 10L);
+        }, 0L, 1000L);
     }
 
     /**
@@ -151,12 +155,30 @@ public class PomodoroWindow {
     }
 
     /**
+     * Initializes all audio dependencies to play sounds.
+     */
+    public void initializeAudio() {
+        try {
+            audioStream = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("/audio/pomodoro_alarm.wav"));
+            AudioFormat format = audioStream.getFormat();
+            DataLine.Info info = new DataLine.Info(Clip.class, format);
+            audioClip = (Clip) AudioSystem.getLine(info);
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Alarm sound that is played whenever timer is done.
      */
     private void playAlarmSound() {
-        //TODO: This
-        AudioClip alarm = new AudioClip(getClass().getResource("/audio/pomodoro_alarm.wav").toString());
-        alarm.play();
+        try {
+            audioClip.open(audioStream);
+            audioClip.start();
+        } catch (IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+        audioClip.close();
     }
 
     /**
@@ -167,26 +189,23 @@ public class PomodoroWindow {
             case SESSION -> {
                 Platform.runLater(() -> statusLabel.setText("Session: " + getSessionNumber() + " / 4"));
                 //HTML-codes for pomodoro background colors
-                String SESSION_COLOR = "#9fe97a";
-                setComponentColor(SESSION_COLOR);
+                setComponentColor("#9fe97a");
             }
 
             case SMALL_BREAK -> {
                 Platform.runLater(() -> statusLabel.setText("Small break"));
-                String SMALL_BREAK_COLOR = "#e9937a";
-                setComponentColor(SMALL_BREAK_COLOR);
+                setComponentColor("#e9937a");
             }
 
             case LONG_BREAK -> {
                 Platform.runLater(() -> statusLabel.setText("Long break"));
-                String LONG_BREAK_COLOR = "#8a4531";
-                setComponentColor(LONG_BREAK_COLOR);
+                setComponentColor("#8a4531");
             }
         }
     }
 
     /**
-     * Set background colors for entire pane, buttons and toggle switch
+     * Set background colors for entire pane and toggle switch
      * @param color JavaFX color or HTML-color-code
      */
     private void setComponentColor(String color) {
