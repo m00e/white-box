@@ -139,6 +139,9 @@ public class TaskBox extends VBox {
     public static void removeTask(int taskNr) {
         taskListBox.getChildren().remove(taskMap.get(taskNr));
         taskMap.remove(taskNr);
+
+        if(taskMap.isEmpty()) // Reset counter if there are tasks.
+            taskCounter = 1;
     }
 
     /**

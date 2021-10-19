@@ -16,7 +16,7 @@ public class Task extends BorderPane {
 
     private final int taskNr;
 
-    private Insets insets = new Insets(5);
+    private final Insets insets = new Insets(5);
 
     private final double BUTTON_HEIGHT = WhiteBoxApp.getButtonHeight()-20;
 
