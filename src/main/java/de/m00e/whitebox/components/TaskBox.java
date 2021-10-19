@@ -4,10 +4,8 @@ import de.m00e.whitebox.WhiteBoxApp;
 import de.m00e.whitebox.listeners.LoadTaskListener;
 import de.m00e.whitebox.listeners.SaveTaskListener;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -22,11 +20,14 @@ public class TaskBox extends VBox {
     private final double BUTTON_WIDTH = WhiteBoxApp.getButtonWidth();
     private final double BUTTON_HEIGHT = WhiteBoxApp.getButtonHeight()-20;
 
-    private Button addBtn, clrBtn, saveBtn, saveAsBtn, loadBtn;
+    private static Button addBtn, clrBtn, saveBtn, saveAsBtn, loadBtn;
+    private static TextField newTask;
+
     private static Label currFileLabel;
-    private ScrollPane sp;
+    private static ScrollPane sp;
     private static VBox taskListBox;
     private static ImagePane imgPane;
+
 
     private static HashMap<Integer, Task> taskMap;
     private static int taskCounter = 1;
@@ -38,13 +39,15 @@ public class TaskBox extends VBox {
         setupComponents();
         addListeners();
 
-        btnPane.add(addBtn,0,0);
-        btnPane.add(clrBtn,0,1);
-        btnPane.add(saveBtnPane,1,0);
-        btnPane.add(loadBtn,1,1);
-
         saveBtnPane.setCenter(saveBtn);
         saveBtnPane.setRight(saveAsBtn);
+
+        btnPane.add(newTask, 0,0,4,1);
+        btnPane.add(addBtn,5,0,1,1);
+        btnPane.add(clrBtn,0,1,1,1);
+        btnPane.add(loadBtn,1,1,1,1);
+        btnPane.add(saveBtnPane,2,1,1,1);
+
         getChildren().addAll(imgPane, btnPane, currFileLabel, new Separator(), sp);
         setSpacing(10);
         setPadding(new Insets(0,10,10,10));
@@ -60,11 +63,11 @@ public class TaskBox extends VBox {
 
         taskMap = new HashMap<>();
 
-        addBtn = new Button("Add Task");
+        addBtn = new Button("Add");
         addBtn.getStyleClass().add("button-glassgrey");
         addBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
-        clrBtn = new Button("Clear Tasks");
+        clrBtn = new Button("Clear All");
         clrBtn.getStyleClass().add("button-glassgrey");
         clrBtn.setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
@@ -84,9 +87,13 @@ public class TaskBox extends VBox {
 
         currFileLabel = new Label();
 
-        taskListBox = new VBox();
+        newTask = new TextField();
+        newTask.setStyle(WhiteBoxApp.getDefaultStyle("black"));
 
-        // sp just represents the actual task list with the possibility of scrolling.
+        taskListBox = new VBox();
+        taskListBox.setSpacing(5);
+
+        // sp just represents the actual task list with the scrolling function.
         sp = new ScrollPane();
         sp.setContent(taskListBox);
         sp.setPannable(true); // it means that the user should be able to pan the viewport by using the mouse.
@@ -96,10 +103,7 @@ public class TaskBox extends VBox {
     private void addListeners() {
         // Add single tasks to task list.
         addBtn.setOnAction(event -> {
-            Task task = new Task(taskCounter);
-            taskListBox.getChildren().add(task);
-            taskMap.put(taskCounter,task);
-            taskCounter++;
+            addTask(newTask.getText());
         });
 
         // Delete all tasks at once.
@@ -108,6 +112,24 @@ public class TaskBox extends VBox {
         saveBtn.setOnAction(new SaveTaskListener(false)); // Only save into new file if no current file exists
         saveAsBtn.setOnAction(new SaveTaskListener(true)); // Always save into a new file
         loadBtn.setOnAction(new LoadTaskListener());
+
+        newTask.setOnKeyPressed(event -> {
+            if(event.getCode().equals(KeyCode.ENTER)) {
+                addTask(newTask.getText());
+            }
+        });
+    }
+
+    /**
+     * Adds a new task to the task list.
+     */
+    private void addTask(String taskStr) {
+        Task task = new Task(taskCounter, taskStr);
+        taskListBox.getChildren().add(task);
+        taskMap.put(taskCounter,task);
+        taskCounter++;
+
+        newTask.setText("");
     }
 
     /**
@@ -124,7 +146,6 @@ public class TaskBox extends VBox {
      * @param tasksFile File to save in
      */
     public static void saveTasks(File tasksFile) throws IOException {
-        //TODO: Automatically save file as .tasks file.
         PrintWriter writer = new PrintWriter(tasksFile);
         taskListBox.getChildren().forEach(t -> writer.write(t.toString() + "\n"));
 
