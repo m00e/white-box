@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 
@@ -58,6 +59,10 @@ public class Task extends BorderPane {
         textField.setStyle(WhiteBoxApp.getDefaultStyle("black"));
         textField.setMaxWidth(WhiteBoxApp.getWidth());
         textField.setPrefHeight(BUTTON_HEIGHT);
+        textField.setOnKeyPressed(e -> {
+            if(e.getCode().equals(KeyCode.SEMICOLON))
+                System.out.println("Test");
+        });
 
         this.setLeft(taskNrLbl);
         this.setCenter(textField);

@@ -32,6 +32,7 @@ public class SaveTaskListener implements EventHandler<ActionEvent> {
              If there is one, save it in there. If 'save-as' button is pressed, change in new file regardless. */
             if(saveIntoNew || TaskBox.getRecentFile() == null) {
                 f = fc.showSaveDialog(((Node) event.getTarget()).getScene().getWindow());
+                // TODO: Fix bug; file can't be named after directory in the same path
                 if(f == null) // Nothing was selected.
                     return;
 
