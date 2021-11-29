@@ -23,5 +23,5 @@
 }
 
 .button-glassgrey:hover {
-    -fx-background-color: #ff8d8d;
+    -fx-text-fill: #ff0000;
 }
