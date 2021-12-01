@@ -3,7 +3,7 @@
 ## Table of Contents
 * [About The Project](#about)
     * [Built with](#built-with)
-* [Getting Started](#prerequisites-and-how-to-start)
+* [Prerequisites And How To Start](#prerequisites-and-how-to-start)
     * [Prerequisites](#prerequisites)
     * [How To Start](#how-to-start)
 * [Usage](#usage)
