@@ -23,27 +23,25 @@ Just a little private project of mine.
 * Gradle (Build Tool)
 * CSS (Styling)
 
-<a name="getting-started"/>
+<a name="prerequisites-and-how-to-start"/>
 
-## Getting Started
+## Prerequisites And How To Start
 
 <a name="prerequisites"/>
 
 ### Prerequisites
 
-* JRE 15
+* JRE (Java Runtime Environment) 15 should be enough. Otherwise:
+* JRE 17+
 
-<a name="installation"/>
+<a name="how-to-start"/>
 
-### Installation
+### How To Start
 
-[coming soon]
+* <a href="https://github.com/m00e/whitebox/releases">Download the latest release</a> 
+* Double click the downloaded .jar file or open your terminal/shell, navigate to the directory where the .jar file is located and type in:
 
-<a name="usage"/>
-
-## Usage
-
-[coming soon]
+> java -jar WhiteBox.jar
 
 <a name="credits"/>
 
