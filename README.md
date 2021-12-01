@@ -3,9 +3,9 @@
 ## Table of Contents
 * [About The Project](#about)
     * [Built with](#built-with)
-* [Getting Started](#getting-started)
+* [Getting Started](#prerequisites-and-how-to-start)
     * [Prerequisites](#prerequisites)
-    * [Installation](#installation)
+    * [How To Start](#how-to-start)
 * [Usage](#usage)
 * [Credits](#credits)
 
@@ -41,7 +41,7 @@ Just a little private project of mine.
 * <a href="https://github.com/m00e/whitebox/releases">Download the latest release</a> 
 * Double click the downloaded .jar file or open your terminal/shell, navigate to the directory where the .jar file is located and type in:
 
-> java -jar WhiteBox.jar
+   > java -jar WhiteBox.jar
 
 <a name="credits"/>
 
